@@ -1,0 +1,31 @@
+{
+  "name": "app_rr_hh",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Leonardo Meza",
+  "license": "ISC",
+  "dependencies": {
+    "auth0": "^3.4.0",
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "canvas": "^2.11.2",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.40.0",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.3.0",
+    "pdf-lib": "^1.17.1",
+    "sequelize": "^6.31.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

@@ -1,0 +1,103 @@
+
+require('dotenv').config()
+const { Sequelize, Op, DataTypes } = require('sequelize');
+const path = require('path');
+const fs = require('fs')
+
+const {
+    DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
+} = process.env;
+
+//configuro credenciales y dialecto de la base de datos
+const sequelize = new Sequelize('RR_HH', `${DB_USER}`, `${DB_PASSWORD}`, {
+    host: `${DB_HOST}`,
+    port: `${DB_PORT}`,
+    dialect: 'mysql',
+    logging: false, //setea el console.log de las querys en false para evitar ruido de consola
+    define: {
+        freezeTableName: true //evita que sequelize modifique los nombres de las tablas
+    },
+    pool: {
+        max: 10, // Número máximo de conexiones en el pool
+        min: 0,  // Número mínimo de conexiones en el pool
+        acquire: 30000,
+        idle: 10000,
+      },    
+});
+const basename = path.basename(__filename);
+const modelDefiners = []
+
+//Leo todos los archivos de la carpeta Models, los requiero y agrego al arreglo modelDefiners
+fs.readdirSync(path.join(__dirname, '../Models'))
+    .filter((file) => (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js'))
+    .forEach((file) => {
+        modelDefiners.push(require(path.join(__dirname, '../Models', file)));
+    })
+
+//Injecto la conexion (sequelize) a cada uno los modelos
+modelDefiners.forEach(model => model(sequelize));
+
+let entries = Object.entries(sequelize.models);
+let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
+sequelize.models = Object.fromEntries(capsEntries);
+
+//en sequelize estan todos los modelos importados como propiedades
+//para relacionarlos hago un destructuring
+const {Domicilio, Tipo_de_licencia, Sector, Empleado, Supervisor, Comun_int, Comun_int_empl, Solicitud, Certificado,  Licencia, Puesto, Recibo_de_sueldo, Solicitud_de_puesto, Usuario, Asistencia } = sequelize.models;
+
+// definicion de relaciones
+Domicilio.hasMany(Empleado, {foreignKey: 'domicilio_id'});
+Empleado.belongsTo(Domicilio, {foreignKey: 'domicilio_id'});
+
+Sector.hasMany(Empleado, {foreignKey: 'sector_id'});
+Empleado.belongsTo(Sector, {foreignKey: 'sector_id'});
+
+Empleado.hasOne(Supervisor);
+Supervisor.belongsTo(Empleado);
+
+Sector.hasOne(Supervisor);
+Supervisor.belongsTo(Sector);
+
+// Empleado.hasMany(Solicitud);
+// Solicitud.belongsTo(Empleado);
+
+Supervisor.hasMany(Solicitud, {as: 'autorizo', foreignKey: 'supervisor_id'});
+Solicitud.belongsTo(Supervisor, {foreignKey: 'supervisor_id'})
+
+Solicitud.hasOne(Certificado);
+Certificado.belongsTo(Solicitud);
+
+Sector.hasMany(Puesto);
+Puesto.belongsTo(Sector);
+
+Comun_int.belongsToMany(Empleado, {through: Comun_int_empl});
+Empleado.belongsToMany(Comun_int, {through: Comun_int_empl});
+
+Puesto.hasMany(Solicitud_de_puesto);
+Solicitud_de_puesto.belongsTo(Puesto);
+
+Sector.hasMany(Puesto);
+Puesto.belongsTo(Sector);
+
+Tipo_de_licencia.hasMany(Licencia);
+Licencia.belongsTo(Tipo_de_licencia);
+
+Solicitud.hasOne(Licencia);
+Licencia.belongsTo(Solicitud);
+
+Empleado.hasMany(Recibo_de_sueldo);
+Recibo_de_sueldo.belongsTo(Empleado);
+
+Empleado.hasOne(Usuario)
+Usuario.belongsTo(Empleado);
+
+Empleado.hasMany(Asistencia)
+Asistencia.belongsTo(Empleado);
+
+
+module.exports = {
+    ...sequelize.models,  // models {Domicilio, Empleado, Permiso, etc...}
+    conn: sequelize, // connection
+    Op, // operation
+    sequelize  //sequelize
+};

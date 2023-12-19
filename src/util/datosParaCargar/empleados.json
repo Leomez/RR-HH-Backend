@@ -1,0 +1,151 @@
+[
+	{
+		"legajo" : "123456",
+		"dni" : "12345678",
+		"nombre_empleado" : "Juan",
+		"apellido_empleado" : "Pérez",
+		"fecha_nac" : "1990-01-01",
+		"telefono" : "1234567890",
+		"correo" : "juan@example.com",
+		"fecha_ingr" : "2021-01-01",
+		"sector" : "Mantenimiento",
+		"cargo" : "Gerente",
+		"categoria" : "1°",
+		"permisos" : "ADMIN",
+		"estado" : "Activo",		
+		"domicilio" : {
+			"calle": "Avenida 1",
+			"numero": 123,
+			"ciudad": "Quilmes",
+			"cod_postal": "1001"
+		}
+	},
+	{
+		"legajo" : "123457",
+		"dni" : "87654321",
+		"nombre_empleado" : "Ana",
+		"apellido_empleado" : "Garcia",
+		"fecha_nac" : "1995-08-03",
+		"telefono" : "1134487890",
+		"correo" : "ana@example.com",
+		"fecha_ingr" : "2021-01-01",
+		"sector" : "Recepcion",
+		"cargo" : "Supervisor",
+		"categoria" : "1°",
+		"permisos" : "SUP",
+		"estado" : "Activo",
+		"domicilio" : {
+			"calle": "Avenida 2",
+			"numero": 456,
+			"ciudad": "Berazategui",
+			"cod_postal": "1895"
+		}
+	},
+	{
+		"legajo" : "123458",
+		"dni" : "22345678",
+		"nombre_empleado" : "Juana",
+		"apellido_empleado" : "Fernandez",
+		"fecha_nac" : "1972-12-11",
+		"telefono" : "1143651234",
+		"correo" : "juana@example.com",
+		"fecha_ingr" : "2021-01-01",
+		"sector" : "Sistemas",
+		"cargo" : "Empleado",
+		"categoria" : "2°",
+		"permisos" : "USER",
+		"estado" : "Activo",
+		"domicilio" : {
+			"calle": "Avenida 3",
+			"numero": 789,
+			"ciudad": "Quilmes",
+			"cod_postal": "1001"
+		}
+	},
+	{
+		"legajo" : "123459",
+		"dni" : "29779354",
+		"nombre_empleado" : "Leonardo Ariel",
+		"apellido_empleado" : "Meza",
+		"fecha_nac" : "1982-08-17",
+		"telefono" : "1156592447",
+		"correo" : "leoariel17@gmail.com",
+		"fecha_ingr" : "2022-06-01",
+		"sector" : "Sistemas",
+		"cargo" : "Empleado",
+		"categoria" : "2°",
+		"permisos" : "ADMIN",
+		"estado" : "Activo",
+		"domicilio" : {
+			"calle": "Unamuno",
+			"numero": 3070,
+			"ciudad": "Quilmes",
+			"cod_postal": "1879"
+		}
+	},
+	{
+		"legajo" : "234567",
+		"dni" : "23456789",
+		"nombre_empleado" : "María",
+		"apellido_empleado" : "González",
+		"fecha_nac" : "1985-05-15",
+		"telefono" : "9876543210",
+		"correo" : "maria@example.com",
+		"fecha_ingr" : "2019-03-10",
+		"sector": "Estudios",
+		"cargo" : "Empleado",
+		"categoria" : "2°",
+		"permisos" : "USER",
+		"estado" : "Activo",
+		"domicilio" : {
+			"calle": "Calle 2",
+			"numero": 456,
+			"ciudad": "Buenos Aires",
+			"cod_postal": "2022"
+		}
+	},
+	{
+		"legajo": "456789",
+		"dni": "45678901",
+		"nombre_empleado": "Ana",
+		"apellido_empleado": "López",
+		"fecha_nac": "1987-11-12",
+		"telefono": "6666666666",
+		"correo": "ana2@example.com",
+		"fecha_ingr": "2018-02-15",
+		"sector": "Quirofano",
+		"cargo": "Empleado",
+		"categoria": "2°",
+		"permisos": "USER",
+		"estado": "Activo",
+		"domicilio": {
+			"calle": "Calle 4",
+			"numero": 101,
+			"ciudad": "Rosario",
+			"cod_postal": "4004"
+		}
+	},
+	{
+		"legajo": "678901",
+		"dni": "67890123",
+		"nombre_empleado": "Laura",
+		"apellido_empleado": "Díaz",
+		"fecha_nac": "1980-12-11",
+		"telefono": "8888888888",
+		"correo": "laura@example.com",
+		"fecha_ingr": "2017-07-12",
+		"sector": "Administración y Finanzas",
+		"cargo": "Gerente",
+		"categoria": "Fuera de Convenio",
+		"permisos": "ADMIN",
+		"estado": "Activo",
+		"domicilio": {
+			"calle": "Calle 6",
+			"numero": 303,
+			"ciudad": "La Plata",
+			"cod_postal": "6006"
+		}
+	}	
+			
+]
+

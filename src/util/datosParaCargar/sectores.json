@@ -1,0 +1,20 @@
+[
+	{		
+		"nombre_sector" : "Recepcion"		
+	},
+	{
+		"nombre_sector" : "Sistemas"
+	},
+	{
+		"nombre_sector" : "Mantenimiento"
+	},
+	{
+		"nombre_sector" : "Estudios"
+	},
+	{
+		"nombre_sector" : "Quirofano"
+	},
+	{
+		"nombre_sector" : "Administración y Finanzas"
+	}
+]
