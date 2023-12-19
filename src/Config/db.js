@@ -9,9 +9,9 @@ const {
 } = process.env;
 
 //configuro credenciales y dialecto de la base de datos
-const sequelize = new Sequelize(`${DB_NAME}` || 'RR_HH', `${DB_USER}` || 'root', `${DB_PASSWORD}` || 1234, {
-    host: `${DB_HOST}` || 'localhost',
-    port: `${DB_PORT}` || 3306,
+const sequelize = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}`, {
+    host: `${DB_HOST}`,
+    port: `${DB_PORT}`,
     dialect: 'mysql',
     logging: false, //setea el console.log de las querys en false para evitar ruido de consola
     define: {
