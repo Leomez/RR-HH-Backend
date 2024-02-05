@@ -12,6 +12,11 @@ const { CrearAdmin } = require('./CrearAdmin')
 const { AuthToken } = require('../Middleware/authToken')
 const router = Router();
 
+
+
+router.get('/', (req, res) => {
+    res.status(200).send('App de RR HH');
+});
 router.use('/login', Sesion);
 
 router.use(AuthToken)
@@ -25,8 +30,5 @@ router.use('/notificaciones', Notificaciones)
 router.use('/supervisor', Supervisor)
 // router.use('/crearAdmin', CrearAdmin);
 
-router.get('/', (req, res) => {
-    res.status(200).send('App de RR HH');
-});
 
 module.exports = router;
