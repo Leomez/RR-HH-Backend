@@ -16,6 +16,7 @@ async function iniciarDatos() {
         }));
         await Promise.all(empleados.map(e => {
             // console.log(e.sector);
+            // file deepcode ignore PromiseNotCaughtNode: <please specify a reason of ignoring this>
             crearEmpleado(e).then(en => {
             // console.log(`empleado ${en.data} creado exitosamente...`);
             })

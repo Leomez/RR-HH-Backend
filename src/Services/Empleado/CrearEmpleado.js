@@ -64,6 +64,7 @@ async function crearEmpleado(datos) {
         } catch (error) {
             console.error('Error al crear el empleado: ',error)    
         }
+        
         // console.log(empleado);
 
         return {

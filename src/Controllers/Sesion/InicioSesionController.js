@@ -2,9 +2,11 @@ const { IniciarSesion } = require('../../Services/Sesion/IniciarSesion')
 
 async function InicioSesionController(req, res) {
     const { user } = req   
+       
     try {
         const resultado = await IniciarSesion(user)
         if (resultado.success) {
+            resultado.data.token = req.token
             res.status(200).json({
                 success: true,
                 message: resultado.message,

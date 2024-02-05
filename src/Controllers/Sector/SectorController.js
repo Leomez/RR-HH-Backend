@@ -70,7 +70,7 @@ async function TraerSectorXId(req, res) {
 }
 
 async function TraerSector(req, res) {
-    const { nombre_sector } = req.body;      
+    const { nombre_sector } = req.query;      
     const sector = await traerSector(nombre_sector)    
     try {
         res.status(200).json({

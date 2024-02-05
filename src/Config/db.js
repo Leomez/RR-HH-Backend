@@ -52,10 +52,10 @@ Empleado.belongsTo(Domicilio, {foreignKey: 'domicilio_id'});
 Sector.hasMany(Empleado, {foreignKey: 'sector_id'});
 Empleado.belongsTo(Sector, {foreignKey: 'sector_id'});
 
-Empleado.hasOne(Supervisor);
-Supervisor.belongsTo(Empleado);
+Empleado.hasOne(Supervisor);//un empleado tiene un cargo de supervisor
+Supervisor.belongsTo(Empleado);//un cargo de supervisor puede pertenecer a varios empleados(puede ser un supervisor por turno)
 
-Sector.hasOne(Supervisor);
+Sector.hasMany(Supervisor);
 Supervisor.belongsTo(Sector);
 
 // Empleado.hasMany(Solicitud);
@@ -68,7 +68,7 @@ Solicitud.hasOne(Certificado);
 Certificado.belongsTo(Solicitud);
 
 Sector.hasMany(Puesto);
-Puesto.belongsTo(Sector);
+Puesto.belongsTo(Sector);//puesto se refiere a posicion para busqueda de candidato
 
 Comun_int.belongsToMany(Empleado, {through: Comun_int_empl});
 Empleado.belongsToMany(Comun_int, {through: Comun_int_empl});
@@ -76,8 +76,8 @@ Empleado.belongsToMany(Comun_int, {through: Comun_int_empl});
 Puesto.hasMany(Solicitud_de_puesto);
 Solicitud_de_puesto.belongsTo(Puesto);
 
-Sector.hasMany(Puesto);
-Puesto.belongsTo(Sector);
+// Sector.hasMany(Puesto);
+// Puesto.belongsTo(Sector);
 
 Tipo_de_licencia.hasMany(Licencia);
 Licencia.belongsTo(Tipo_de_licencia);
