@@ -1,3 +1,4 @@
+const { error } = require('pdf-lib')
 const { traerEmpleados } = require('../../Services/Empleado/TraerEmpleado')
 const { TraerEmpleadoXId} = require('../../Services/Empleado/TraerEmpleadoXId')
 
@@ -37,6 +38,12 @@ async function TraerEmpleado (req, res){
                 success: true,
                 message: empleado.mensaje,
                 data: await empleado.data
+            })
+        } else {
+            res.status(400).json({
+                success: false,
+                message: empleado.mensaje,
+                error: empleado.error
             })
         }
     } catch (error) {

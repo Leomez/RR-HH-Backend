@@ -13,7 +13,7 @@ const startServer = async () => {
     server.listen(port, async () => {
         console.log(`Server corriendo en el puerto ${port}`)
         console.log(`Tiempo de sincronización de la base de datos: ${syncTimeInSeconds} segundos`);
-
+        
         // await iniciarDatos().then(() => {
         // })
     });

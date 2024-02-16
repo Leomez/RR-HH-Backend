@@ -5,11 +5,23 @@ const path = require('path');
 const fs = require('fs')
 
 const {
-    DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
+    DB_NAME,
+    DB_USER,
+    DB_PASSWORD,
+    DB_HOST,
+    DB_PORT,
+    PG_DB_NAME,
+    PG_DB_USER,
+    PG_DB_PASSWORD,
+    PG_DB_HOST,
+    PG_DB_PORT,
 } = process.env;
 
+//defino una variable para usar el backup de postgre
+const usePostgresBackup = process.env.USE_PG_BACKUP === 'true';
+
 //configuro credenciales y dialecto de la base de datos
-const sequelize = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}`, {
+const sequelizeMySQL = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}`, {
     host: `${DB_HOST}`,
     port: `${DB_PORT}`,
     dialect: 'mysql',
@@ -22,8 +34,25 @@ const sequelize = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}`, {
         min: 0,  // Número mínimo de conexiones en el pool
         acquire: 30000,
         idle: 10000,
-      },    
+    },
 });
+
+const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_DB_PASSWORD}`, {
+    host: `${PG_DB_HOST}`,
+    port: `${PG_DB_PORT}`,
+    dialect: 'postgres',
+    logging: false, //setea el console.log de las querys en false para evitar ruido de consola
+    define: {
+        freezeTableName: true //evita que sequelize modifique los nombres de las tablas
+    },
+    pool: {
+        max: 10, // Número máximo de conexiones en el pool
+        min: 0,  // Número mínimo de conexiones en el pool
+        acquire: 30000,
+        idle: 10000,
+    },
+});
+const sequelize = usePostgresBackup ? sequelizePostgres : sequelizeMySQL;
 const basename = path.basename(__filename);
 const modelDefiners = []
 
@@ -43,14 +72,14 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 //en sequelize estan todos los modelos importados como propiedades
 //para relacionarlos hago un destructuring
-const {Domicilio, Tipo_de_licencia, Sector, Empleado, Supervisor, Comun_int, Comun_int_empl, Solicitud, Certificado,  Licencia, Puesto, Recibo_de_sueldo, Solicitud_de_puesto, Usuario, Asistencia } = sequelize.models;
+const { Domicilio, Tipo_de_licencia, Sector, Empleado, Supervisor, Comun_int, Comun_int_empl, Solicitud, Certificado, Licencia, Puesto, Recibo_de_sueldo, Solicitud_de_puesto, Usuario, Asistencia } = sequelize.models;
 
 // definicion de relaciones
-Domicilio.hasMany(Empleado, {foreignKey: 'domicilio_id'});
-Empleado.belongsTo(Domicilio, {foreignKey: 'domicilio_id'});
+Domicilio.hasMany(Empleado, { foreignKey: 'domicilio_id' });
+Empleado.belongsTo(Domicilio, { foreignKey: 'domicilio_id' });
 
-Sector.hasMany(Empleado, {foreignKey: 'sector_id'});
-Empleado.belongsTo(Sector, {foreignKey: 'sector_id'});
+Sector.hasMany(Empleado, { foreignKey: 'sector_id' });
+Empleado.belongsTo(Sector, { foreignKey: 'sector_id' });
 
 Empleado.hasOne(Supervisor);//un empleado tiene un cargo de supervisor
 Supervisor.belongsTo(Empleado);//un cargo de supervisor puede pertenecer a varios empleados(puede ser un supervisor por turno)
@@ -61,8 +90,8 @@ Supervisor.belongsTo(Sector);
 // Empleado.hasMany(Solicitud);
 // Solicitud.belongsTo(Empleado);
 
-Supervisor.hasMany(Solicitud, {as: 'autorizo', foreignKey: 'supervisor_id'});
-Solicitud.belongsTo(Supervisor, {foreignKey: 'supervisor_id'})
+Supervisor.hasMany(Solicitud, { as: 'autorizo', foreignKey: 'supervisor_id' });
+Solicitud.belongsTo(Supervisor, { foreignKey: 'supervisor_id' })
 
 Solicitud.hasOne(Certificado);
 Certificado.belongsTo(Solicitud);
@@ -70,8 +99,8 @@ Certificado.belongsTo(Solicitud);
 Sector.hasMany(Puesto);
 Puesto.belongsTo(Sector);//puesto se refiere a posicion para busqueda de candidato
 
-Comun_int.belongsToMany(Empleado, {through: Comun_int_empl});
-Empleado.belongsToMany(Comun_int, {through: Comun_int_empl});
+Comun_int.belongsToMany(Empleado, { through: Comun_int_empl });
+Empleado.belongsToMany(Comun_int, { through: Comun_int_empl });
 
 Puesto.hasMany(Solicitud_de_puesto);
 Solicitud_de_puesto.belongsTo(Puesto);

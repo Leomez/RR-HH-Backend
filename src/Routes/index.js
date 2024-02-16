@@ -18,13 +18,13 @@ router.get('/', (req, res) => {
     res.status(200).send('App de RR HH');
 });
 router.use('/login', Sesion);
+router.use('/usuario', Usuario)
 
 router.use(AuthToken)
 
 router.use('/empleado', Empleado);
 router.use('/domicilio', Domicilio)
 router.use('/sector', Sector);
-router.use('/usuario', Usuario)
 router.use('/recibos', Recibos) 
 router.use('/notificaciones', Notificaciones)
 router.use('/supervisor', Supervisor)

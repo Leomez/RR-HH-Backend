@@ -7,15 +7,16 @@ const cumpleanios = async () => {
     const mesActual = fechaActual.getMonth() + 1; // Los meses en JavaScript van de 0 a 11
 
     const cumpleanieros = await Empleado.findAll({
-      where: {
-        [Op.and]: [
-          sequelize.literal(`DAY(fecha_nac) = ${diaActual}`),
-          sequelize.literal(`MONTH(fecha_nac) = ${mesActual}`),
-        ],
-      },
+      where: sequelize.where(sequelize.fn('date', sequelize.col('fecha_nac')), '=', fechaActual)
+      // where: {
+      //   [Op.and]: [
+      //     // Utilizamos operadores de Sequelize para comparar fechas sin usar funciones específicas de SQL
+      //     sequelize.where(sequelize.fn('extract', 'day', sequelize.col('fecha_nac')), diaActual),
+      //     sequelize.where(sequelize.fn('extract', 'month', sequelize.col('fecha_nac')), mesActual),
+      //   ],
+      // },
     });
-
-    // if (cumpleanieros.length > 0) {
+    console.log(cumpleanieros);
     const cumples = cumpleanieros.map((c) => {
       return {
         tag: "cumple",
@@ -30,26 +31,9 @@ const cumpleanios = async () => {
       };
     });
 
-    return cumples
-    // return {
-    //   titulo: "Feliz cumple",
-    //   contenido:
-    //     cumpleanieros.length === 1
-    //       ? `Hoy cumple años ${cumpleanieros.map(
-    //           (e) =>
-    //             `${e.dataValues.nombre_empleado} ${e.dataValues.apellido_empleado}`.toUpperCase()
-    //         )} Les deseamos ¡¡Muy feliz cumple!!`
-    //       : `Hoy cumplen años: ${cumpleanieros.map(
-    //           (e) =>
-    //             `${e.dataValues.nombre_empleado} ${e.dataValues.apellido_empleado} `.toUpperCase()
-    //         )} Les deseamos ¡¡Muy feliz cumple!!`,
-    //   fecha: fechaActual.toLocaleDateString("es-AR", {
-    //     day: "numeric",
-    //     month: "short",
-    //     year: "numeric",
-    //   }),
-    //   accion: "Ver mas",
-    // };
+    return cumples;
+
+        
   } catch (error) {
     console.log(error);
   }

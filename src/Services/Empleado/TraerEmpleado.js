@@ -32,7 +32,7 @@ async function traerEmpleados(query) {
     const empleados = await Empleado.findAll({
       where: whereClause
     });    
-    
+    // console.log(empleados);
     if (empleados.length > 0) {
       return {
         success: true,
