@@ -19,6 +19,7 @@ const {
 
 //defino una variable para usar el backup de postgre
 const usePostgresBackup = process.env.USE_PG_BACKUP === 'true';
+const useUrl = process.env.USE_PG_URL === 'true';
 
 //configuro credenciales y dialecto de la base de datos
 const sequelizeMySQL = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}`, {
@@ -52,7 +53,10 @@ const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_
         idle: 10000,
     },
 });
-const sequelize = usePostgresBackup ? sequelizePostgres : sequelizeMySQL;
+
+const sequelizePgUrl = new Sequelize('postgres://rr_hh_user:wZKMlpMJIWsRLN4I9m9DzyTPVrNXUaaS@dpg-cn7oomacn0vc7390esmg-a.oregon-postgres.render.com/rr_hh')
+
+const sequelize = usePostgresBackup ? sequelizePostgres : useUrl ? sequelizePgUrl : sequelizeMySQL;
 const basename = path.basename(__filename);
 const modelDefiners = []
 
