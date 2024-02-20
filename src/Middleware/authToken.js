@@ -7,6 +7,7 @@ async function AuthToken(req, res, next) {
         // Verificar si existe la cabecera 'authorization' y es diferente de undefined
         if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
             const token = req.headers.authorization.split(' ')[1];
+            console.log('validando token de autorizacion...');
             const decodedToken = await admin.auth().verifyIdToken(token);
             req.token = token;
             req.user = decodedToken;

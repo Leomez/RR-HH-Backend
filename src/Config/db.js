@@ -15,6 +15,7 @@ const {
     PG_DB_PASSWORD,
     PG_DB_HOST,
     PG_DB_PORT,
+    PG_URL
 } = process.env;
 
 //defino una variable para usar el backup de postgre
@@ -54,7 +55,7 @@ const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_
     },
 });
 
-const sequelizePgUrl = new Sequelize('postgres://rr_hh_user:wZKMlpMJIWsRLN4I9m9DzyTPVrNXUaaS@dpg-cn7oomacn0vc7390esmg-a.oregon-postgres.render.com/rr_hh')
+const sequelizePgUrl = new Sequelize(`${PG_URL}`)
 
 const sequelize = usePostgresBackup ? sequelizePostgres : useUrl ? sequelizePgUrl : sequelizeMySQL;
 const basename = path.basename(__filename);
