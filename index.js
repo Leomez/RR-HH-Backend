@@ -6,7 +6,7 @@ const port = process.env.PORT || 3001;
 
 const startServer = async () => {
     const start = performance.now();
-    await conn.sync({ force: false });
+    await conn.sync({ force: true });
     const end = performance.now();
     const syncTimeInSeconds = (end - start) / 1000;
 
