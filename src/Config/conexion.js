@@ -51,7 +51,7 @@ const sequelizeMySQL = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}
     },
 });
 
-const sequelizePgUrl = new Sequelize("postgres://rr_hh_user:pC53YdK6aEO1plhjhofO9SdYb7CKqO4S@dpg-cnb1830cmk4c73a6cau0-a.oregon-postgres.render.com/rr_hh_lh6a",{
+const sequelizePgUrl = new Sequelize(`${PG_URL}`,{
     logging: (...msg) => console.log(msg),
 })
 

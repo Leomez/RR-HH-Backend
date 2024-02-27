@@ -1,6 +1,6 @@
 const server = require('./src/server')
 const { conn } = require('./src/Config/db');
-// const { iniciarDatos } = require('./src/util/IniciarDatosDePrueba')
+const { iniciarDatos } = require('./src/util/IniciarDatosDePrueba')
 
 const port = process.env.PORT || 3001;
 
