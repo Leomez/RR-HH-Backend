@@ -20,7 +20,7 @@ const {
 const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_DB_PASSWORD}`, {
     host: `${PG_DB_HOST}`,
     port: `${PG_DB_PORT}`,
-    dialect: 'postgres',
+    dialect: 'postgre',
     ssl: false,
     logging: false, //setea el console.log de las querys en false para evitar ruido de consola
     define: {
