@@ -22,7 +22,7 @@ const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_
     port: `${PG_DB_PORT}`,
     dialect: "postgres",
     ssl: false,
-    // logging: console.log, //setea el console.log de las querys en false para evitar ruido de consola
+    logging: false, //setea el console.log de las querys en false para evitar ruido de consola
     define: {
         freezeTableName: true //evita que sequelize modifique los nombres de las tablas
     },
