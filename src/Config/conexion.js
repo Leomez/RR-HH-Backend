@@ -17,10 +17,24 @@ const {
 } = process.env;
 
 
-const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_DB_PASSWORD}`, {
-    host: `${PG_DB_HOST}`,
-    port: `${PG_DB_PORT}`,
-    dialect: 'postgres',
+// const sequelizePostgres = new Sequelize(`${PG_DB_NAME}`, `${PG_DB_USER}`, `${PG_DB_PASSWORD}`, {
+//     host: `${PG_DB_HOST}`,
+//     port: `${PG_DB_PORT}`,
+//     dialect: 'postgres',
+//     ssl: false,
+//     logging: false, //setea el console.log de las querys en false para evitar ruido de consola
+//     define: {
+//         freezeTableName: true //evita que sequelize modifique los nombres de las tablas
+//     },
+//     pool: {
+//         max: 10, // Número máximo de conexiones en el pool
+//         min: 1,  // Número mínimo de conexiones en el pool
+//         acquire: 30000,
+//         idle: 10000,
+//     },
+// });
+
+const sequelizePostgres = new Sequelize(`${PG_URL}`, {   
     ssl: false,
     logging: false, //setea el console.log de las querys en false para evitar ruido de consola
     define: {
