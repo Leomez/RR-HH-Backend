@@ -29,10 +29,10 @@ async function CrearAdmin() {
   };
 
   try {
-      const sect = await crearSector(sector.nombre_sector)
-      .then(() => console.log("Se creo el sector: " + sect.sector))      
-      const admin = await crearEmpleado(admin)
-      .then(() => console.log("se creo el registro: " + admin.data))    
+      await crearSector(sector.nombre_sector)
+      .then(console.log("Se creo el sector: " + sector.nombre_sector))      
+      await crearEmpleado(admin)
+      .then(console.log("se creo el registro: " + admin.nombre_empleado ))    
   } catch (error) {
     console.log(error);
   }
