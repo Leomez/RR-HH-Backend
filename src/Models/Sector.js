@@ -12,15 +12,7 @@ module.exports = async (sequelize) => {
     nombre_sector: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    // jefe: {
-    //   type: DataTypes.UUID,
-    //   allowNull: true,
-    //   references: {
-    //     model: 'Empleado',
-    //     key: 'id'
-    //   }
-    // }
+    },    
   }, {
     timestamps: true,
     createdAt: 'creado',

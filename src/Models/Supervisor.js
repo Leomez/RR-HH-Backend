@@ -22,3 +22,4 @@ module.exports = async (sequelize) => {
         paranoid: true,
     })
 }
+

@@ -6,7 +6,7 @@
 		"apellido_empleado" : "Pérez",
 		"fecha_nac" : "1990-01-01",
 		"telefono" : "1234567890",
-		"correo" : "juan@example.com",
+		"correo" : "juan@ejemplo.com",
 		"fecha_ingr" : "2021-01-01",
 		"sector" : "Mantenimiento",
 		"cargo" : "Gerente",

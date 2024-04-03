@@ -5,6 +5,7 @@ async function TraerSupervisorController(req, res) {
     try {
         const resp = await TraerSupervisores(sectorId)
         if (resp.success) {
+            console.log(resp.data);
             res.status(200).json({
                 success: resp.success,
                 message: resp.message,

@@ -3,7 +3,6 @@ const { admin } = require('../Firebase/firebase');
 async function AuthToken(req, res, next) {
     try {
         // console.log(req.headers);
-
         // Verificar si existe la cabecera 'authorization' y es diferente de undefined
         if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
             const token = req.headers.authorization.split(' ')[1];
