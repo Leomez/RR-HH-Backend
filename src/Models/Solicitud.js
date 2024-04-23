@@ -8,66 +8,69 @@ module.exports = async (sequelize) => {
             primaryKey: true,
             allowNull: false,
             unique: true
-        },
-        solicitante: {
-            type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: 'Empleado',
-                key: 'id'
-            }
-        },       
-        tipo_de_permiso: {
-            type: DataTypes.ENUM('Salir temprano', 'Cambio de turno', 'Licencia', 'Ausencia a compenzar'),
-            allowNull: false
-        },
+        },        
         fecha: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/,
+                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
                 msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         },
         motivo: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         estado: {
             type: DataTypes.ENUM('Aprobado', 'Rechazado', 'En proceso'),
             allowNull: false,
             defaultValue: 'En proceso'
-        },    
-        // id_empleado: {
-        //     type: DataTypes.UUID,
-        //     allowNull: false,
-        //     references: {
-        //         model: 'Empleado',
-        //         key: 'id'
-        //     }
-        // },
-        // jefe_autorizante: {
-        //     type: DataTypes.UUID,
-        //     allowNull: false,
-        //     references: {
-        //         model: 'Empleado',
-        //         key: 'id'
-        //     }
-        // },
-        // certificado: {
-        //     type: DataTypes.UUID,
-        //     allowNull: false,
-        //     references: {
-        //         model: 'Certificado',
-        //         key: 'id'
-        //     }
-        // }
-
-},{
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'permiso'
-})
+        },
+        fecha_desde: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
+                msg: 'El formato de fecha debe ser dd/mm/aaaa'
+            }
+        },
+        fecha_hasta: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
+                msg: 'El formato de fecha debe ser dd/mm/aaaa'
+            }
+        },
+        hora_ingreso : {
+            type: DataTypes.TIME,
+            allowNull: true,
+        },
+        hora_salida : {
+            type: DataTypes.TIME,
+            allowNull: true,
+        },
+        dia_compensado: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
+                msg: 'El formato de fecha debe ser dd/mm/aaaa'
+            }
+        }, 
+        dia_compensatorio: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            validate: {
+                is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
+                msg: 'El formato de fecha debe ser dd/mm/aaaa'
+            }
+        },
+    },{
+        timestamps: false,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'permiso'
+    })
 }
 

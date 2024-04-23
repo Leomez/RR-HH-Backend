@@ -12,6 +12,10 @@ module.exports = async (sequelize) => {
         url_archivo: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        solicitud_id: {
+            type: DataTypes.UUID,
+            allowNull: false
         }
     },{
         timestamps: true,

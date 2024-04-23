@@ -8,6 +8,7 @@ const Usuario = require('./UsuarioRutas')
 const Recibos = require('./RecibosRuta')
 const Notificaciones = require('./Notificaciones')
 const Supervisor = require('./SupervisorRuta')
+const Licencias = require('./LicenciasYPermisosRuta')
 const { CrearAdmin } = require('./CrearAdmin')
 const { AuthToken } = require('../Middleware/authToken')
 const router = Router();
@@ -22,7 +23,7 @@ router.use('/crearAdmin', CrearAdmin);
 router.use('/login', Sesion);
 router.use('/usuario', Usuario)
 
-router.use(AuthToken)
+// router.use(AuthToken)
 
 router.use('/empleado', Empleado);
 router.use('/domicilio', Domicilio)
@@ -30,6 +31,7 @@ router.use('/sector', Sector);
 router.use('/recibos', Recibos) 
 router.use('/notificaciones', Notificaciones)
 router.use('/supervisor', Supervisor)
+router.use('/licencias', Licencias)
 
 
 module.exports = router;
