@@ -1,5 +1,7 @@
 const path = require('path')
 const { admin } = require('../../Firebase/firebase')
+const { app } = require('../../Firebase/firebase')
+const { getAuth } = require('firebase-admin/auth');
 const { sequelice } = require("../../Config/db")
 const { Empleado } = require("../../Config/db");
 const { Usuario } = require('../../Config/db');
@@ -9,12 +11,12 @@ const sinFoto = path.join(__dirname, '..', 'assets', 'noFoto.png');
 async function CrearUsuario(datos) {
 
   const { email, password } = datos;
+  const auth = getAuth(app);
 
   try {
     const usuarioAutorizado = await Empleado.findOne({
       where: { correo: email }
-    })
-    console.log(usuarioAutorizado);    
+    })      
 
     if (usuarioAutorizado === null) {
       return {
@@ -23,13 +25,15 @@ async function CrearUsuario(datos) {
         error: 'No existe un empleado en la base de datos con ese email'
       }
     } else {
-      console.log(usuarioAutorizado.dataValues)
-      const userRecord = await admin.auth().createUser({
+      
+      // Crear usuario en Firebase
+      const userRecord = await auth.createUser({
         email: email,
         password: password,
         displayName: usuarioAutorizado.dataValues.nombre_empleado
       });
-
+      
+      // Crear usuario en la base de datos
       const nuevoUsuario = await Usuario.create({
         id: userRecord.uid,
         usuario: userRecord.displayName,

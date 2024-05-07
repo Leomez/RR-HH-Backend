@@ -23,7 +23,7 @@ router.use('/crearAdmin', CrearAdmin);
 router.use('/login', Sesion);
 router.use('/usuario', Usuario)
 
-// router.use(AuthToken)
+router.use(AuthToken)
 
 router.use('/empleado', Empleado);
 router.use('/domicilio', Domicilio)
