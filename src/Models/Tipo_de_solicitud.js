@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = async (sequelize) => {
-    await sequelize.define('Tipo_de_licencia', {
+    await sequelize.define('Tipo_de_solicitud', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -15,7 +15,11 @@ module.exports = async (sequelize) => {
         },
         canti_dias: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
+        },
+        caracteristicas: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     }, {
         timestamps: false,
