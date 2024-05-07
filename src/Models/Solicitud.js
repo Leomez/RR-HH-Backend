@@ -14,7 +14,6 @@ module.exports = async (sequelize) => {
             allowNull: false,
             validate: {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
-                msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         },
         motivo: {
@@ -31,7 +30,6 @@ module.exports = async (sequelize) => {
             allowNull: true,
             validate: {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
-                msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         },
         fecha_hasta: {
@@ -39,7 +37,6 @@ module.exports = async (sequelize) => {
             allowNull: true,
             validate: {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
-                msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         },
         hora_ingreso : {
@@ -50,12 +47,11 @@ module.exports = async (sequelize) => {
             type: DataTypes.TIME,
             allowNull: true,
         },
-        dia_compensado: {
+        fecha_permiso: {
             type: DataTypes.STRING,
             allowNull: true,
             validate: {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
-                msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         }, 
         dia_compensatorio: {
@@ -63,7 +59,6 @@ module.exports = async (sequelize) => {
             allowNull: true,
             validate: {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
-                msg: 'El formato de fecha debe ser dd/mm/aaaa'
             }
         },
     },{
