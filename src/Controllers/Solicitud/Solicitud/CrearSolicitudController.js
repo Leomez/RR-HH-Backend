@@ -12,14 +12,15 @@ async function crearSolicitudController(req, res) {
         })
        } else {
         res.status(400).json({
-            message: respuesta.message,
+            message: `Error en el controlador: ${respuesta.message}`,
             data: respuesta.data,
             error: respuesta.error
         })
        } 
     } catch (error) {
         res.status(500).json({
-            message: error.message
+            message: error.message,
+            error: error
         })
     }
     

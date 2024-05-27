@@ -8,6 +8,10 @@ module.exports = async (sequelize) => {
             primaryKey: true,
             allowNull: false,
             unique: true
+        },
+        tipo: {
+            type: DataTypes.UUID,
+            allowNull: false,            
         },        
         fecha: {
             type: DataTypes.STRING,
@@ -61,6 +65,10 @@ module.exports = async (sequelize) => {
                 is: /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/i,
             }
         },
+        diasSolicitados: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        }
     },{
         timestamps: false,
         freezeTableName: true,

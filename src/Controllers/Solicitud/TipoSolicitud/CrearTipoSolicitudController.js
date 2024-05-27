@@ -3,9 +3,9 @@ const { CrearTipoSolicitud } = require("../../../Services/Solicitudes/TipoSolici
 // Crear tipo solicitud
 const crearTipoSolicitud = async (req, res) => {
   console.log(req.body);
-  const { nombre, canti_dias, caracteristicas } = req.body;
+  const { nombre, caracteristicas } = req.body;
   try {
-    const respuesta = await CrearTipoSolicitud({ nombre, canti_dias, caracteristicas });
+    const respuesta = await CrearTipoSolicitud({ nombre, caracteristicas });
     if (!respuesta.success) {
       res.status(400).json({
         success: respuesta.success,

@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = async (sequelize) => {
-    await sequelize.define('Tipo_de_solicitud', {
+    await sequelize.define('Tipo_permiso', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -22,5 +22,3 @@ module.exports = async (sequelize) => {
         paranoid: true
     })
 }
-
-

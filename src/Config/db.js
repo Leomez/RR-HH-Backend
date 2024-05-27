@@ -30,7 +30,27 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 //en sequelize estan todos los modelos importados como propiedades
 //para relacionarlos hago un destructuring
-const { Domicilio, Tipo_de_solicitud, Sector, Empleado, Supervisor, Comun_int, Comun_int_empl, Solicitud, Certificado, Puesto, Recibo_de_sueldo, Solicitud_de_puesto, Usuario, Asistencia } = sequelize.models;
+const { 
+    Domicilio, 
+    Tipo_de_solicitud,
+    Tipo_permiso, 
+    Tipo_licencia, 
+    Tipo_vacaciones, 
+    Vacaciones_empleado, 
+    Licencia_empleado, 
+    Sector, 
+    Empleado, 
+    Supervisor, 
+    Comun_int, 
+    Comun_int_empl, 
+    Solicitud, 
+    Certificado, 
+    Puesto, 
+    Recibo_de_sueldo, 
+    Solicitud_de_puesto, 
+    Usuario, 
+    Asistencia 
+} = sequelize.models;
 
 // definicion de relaciones
 Domicilio.hasMany(Empleado, { foreignKey: 'domicilio_id' });
@@ -42,8 +62,17 @@ Empleado.belongsTo(Sector, { foreignKey: 'sector_id' });
 Empleado.hasOne(Supervisor);//un empleado tiene un cargo de supervisor
 Supervisor.belongsTo(Empleado);//un cargo de supervisor puede pertenecer a varios empleados(puede ser un supervisor por turno)
 
+Vacaciones_empleado.belongsTo(Tipo_vacaciones, { foreignKey: 'nombre', targetKey: 'nombre' })
+Tipo_vacaciones.hasMany(Vacaciones_empleado, { foreignKey: 'nombre', sourceKey: 'nombre' })
+
+Empleado.hasMany(Licencia_empleado, { foreignKey: 'empleado_id' });
+Licencia_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id' });
+
 Sector.hasMany(Supervisor);
 Supervisor.belongsTo(Sector);
+
+Empleado.hasOne(Vacaciones_empleado, { foreignKey: 'empleado_id' });
+Vacaciones_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id' });
 
 Empleado.hasMany(Solicitud, { as: 'empleado', foreignKey: 'empleado_id'});
 Solicitud.belongsTo(Empleado, { as: 'empleado', foreignKey: 'empleado_id'});
@@ -51,8 +80,18 @@ Solicitud.belongsTo(Empleado, { as: 'empleado', foreignKey: 'empleado_id'});
 Supervisor.hasMany(Solicitud, { as: 'supervisor', foreignKey: 'supervisor_id' });
 Solicitud.belongsTo(Supervisor, {as : 'supervisor', foreignKey: 'supervisor_id' })
 
-Tipo_de_solicitud.hasMany(Solicitud, { foreignKey: 'tipo_de_solicitud_id' });//un tipo de solicitud aparece en muchos registros de solicitud
-Solicitud.belongsTo(Tipo_de_solicitud, { foreignKey: 'tipo_de_solicitud_id'})//solicitud se refiere a un tipo de licencia o permiso
+/****** Relaciones de solicitudes de licencias y permisos ******/
+// Solicitud.hasOne(Tipo_permiso, { as: 'tipo', foreignKey: 'solicitud_id' });//un tipo de permiso aparece en muchos registros de solicitud
+// Solicitud.hasOne(Tipo_licencia, { foreignKey: 'solicitud_id' });//un tipo de licencia aparece en muchos registros de solicitud
+// Solicitud.hasOne(Tipo_vacaciones, { foreignKey: 'solicitud_id' });//un tipo de vacaciones aparece en muchos registros de solicitud
+
+// Tipo_permiso.belongsTo(Solicitud, { foreignKey: 'solicitud_id' });//solicitud se refiere a un tipo de permiso
+// Tipo_licencia.belongsTo(Solicitud, { foreignKey: 'solicitud_id' });//solicitud se refiere a un tipo de licencia
+// Tipo_vacaciones.belongsTo(Solicitud, { foreignKey: 'solicitud_id'});//solicitud se refiere a un tipo de vacaciones
+/****** Fin de la configuracion *******/ 
+
+// Tipo_de_solicitud.hasMany(Solicitud, { foreignKey: 'tipo_de_solicitud_id' });//un tipo de solicitud aparece en muchos registros de solicitud
+// Solicitud.belongsTo(Tipo_de_solicitud, { foreignKey: 'tipo_de_solicitud_id'})//solicitud se refiere a un tipo de licencia o permiso
 
 Solicitud.hasMany(Certificado, { foreignKey: 'solicitud_id'});
 Certificado.belongsTo(Solicitud, {foreignKey: 'solicitud_id'});
@@ -62,7 +101,6 @@ Puesto.belongsTo(Sector);//puesto se refiere a posicion para busqueda de candida
 
 Comun_int.belongsToMany(Empleado, { through: Comun_int_empl });
 Empleado.belongsToMany(Comun_int, { through: Comun_int_empl });
-
 
 Puesto.hasMany(Solicitud_de_puesto);
 Solicitud_de_puesto.belongsTo(Puesto);
