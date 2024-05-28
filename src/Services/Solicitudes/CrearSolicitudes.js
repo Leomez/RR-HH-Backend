@@ -17,7 +17,7 @@ async function crearSolicitudes(solicitud) {
 
         const respuesta = await Solicitud.create({
             fecha: formatDate(solicitud.fecha),
-            motivo: solicitud.motivo,
+            motivo: solicitud.motivo || null,
             estado: 'En proceso',
             fecha_desde: solicitud.fechaDesde !="" ? formatDate(solicitud.fechaDesde) : null,
             fecha_hasta: solicitud.fechaHasta !="" ? formatDate(solicitud.fechaHasta) : null,
@@ -27,7 +27,8 @@ async function crearSolicitudes(solicitud) {
             dia_compensatorio: solicitud.fechaCompensatoria !="" ? formatDate(solicitud.fechaCompensatoria) : null,
             empleado_id: solicitud.empleado_id,
             supervisor_id: supervisor.data[0].id,
-            tipo_de_solicitud_id: solicitud.tipo_solicitud_id            
+            tipo: solicitud.tipo_solicitud_id,
+            diasSolicitados: solicitud.diasSolicitados,            
         });
 
         return {
@@ -38,7 +39,8 @@ async function crearSolicitudes(solicitud) {
     } catch (error) {
         return {
             success: false,
-            message: error.message
+            message: error.message,
+            error: error
         }
     }
 

@@ -4,7 +4,7 @@ const { getAuth } = require('firebase-admin/auth');
 const auth  = getAuth(app)
 
 async function AuthToken(req, res, next) {
-    console.log(req.body.data);
+    // console.log(req.query, '<-- req.query');    
     // const usuarioAuxiliar = {
     //     displayName: "Leonardo Ariel Meza",
     //     email:"leoariel17@gmail.com",
@@ -18,6 +18,7 @@ async function AuthToken(req, res, next) {
         if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
             const token = req.headers.authorization.split(' ')[1];
             console.log('validando token de autorizacion...');
+            console.log(token);
                         
             const decodedToken = await auth.verifyIdToken(token);
             req.token = token;
