@@ -2,9 +2,21 @@ const { Tipo_licencia, Tipo_vacaciones, Empleado } = require('../../Config/db')
 
 // const fechaIngreso = '2021-01-01'
 
-function calcularAntiguedad(fechaIngreso) {
-    return new Date().getFullYear() - new Date(fechaIngreso).getFullYear()
+// Función auxiliar para calcular la antigüedad
+function calcularAntiguedad(fecha_ingreso) {
+    const hoy = new Date();
+    const fechaIngreso = new Date(fecha_ingreso);
+    let antiguedad = hoy.getFullYear() - fechaIngreso.getFullYear();
+    const m = hoy.getMonth() - fechaIngreso.getMonth();
+
+    // Ajuste de antigüedad si el mes actual es anterior al mes de ingreso
+    // o si estamos en el mismo mes pero el día actual es anterior al día de ingreso
+    if (m < 0 || (m === 0 && hoy.getDate() < fechaIngreso.getDate())) {
+        antiguedad--;
+    }
+    return antiguedad;
 }
+
 
 // get de licencias
 async function get_tipos_licencia() {
@@ -37,20 +49,28 @@ async function get_tipos_licencia() {
 async function get_tipos_vacaciones(empleado_id) {
     try {        
         console.log(empleado_id, '<--empleado_id');
+        // traigo un empleado por id
         const empleado = await Empleado.findByPk(empleado_id)
-        // console.log(empleado, '<--empleado');
+
+        // separo la fecha de ingreso
         const fecha_ingreso = empleado.fecha_ingr
-        // console.log(fecha_ingreso, '<--fecha_ingreso');
+        
+        // calculo la antiguedad
         const antiguedad = calcularAntiguedad(fecha_ingreso)
-        // console.log(antiguedad, '<--antiguedad');
+
+        // traigo todos los tipos de vacaciones
         const tipos = await Tipo_vacaciones.findAll()
         if (tipos.length === 0) {
+            //respondo en caso de no haber tipos cargados
             return {
                 success: false,
                 data: null,
                 message: 'No hay tipos de vacaciones cargados'
             }
         } else {
+            //respondo si encuentro tipos cargados
+
+            // funcion parametro para ordenar los tipos de vacaciones por nombre [1, 2, 3, 4, 5]
             function compararPorNombre(a, b) {
                 if (a.nombre < b.nombre) {
                   return -1;
@@ -62,7 +82,7 @@ async function get_tipos_vacaciones(empleado_id) {
               }
 
             tipos.sort(compararPorNombre);
-
+            //retorno el tipo de vacaciones segun la antigüedad del empleado
             if (antiguedad === 0) {                
                 return tipos[0];
             } else if (antiguedad >= 1 && antiguedad < 5) {                

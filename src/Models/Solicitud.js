@@ -25,7 +25,7 @@ module.exports = async (sequelize) => {
             allowNull: true,
         },
         estado: {
-            type: DataTypes.ENUM('Aprobado', 'Rechazado', 'En proceso'),
+            type: DataTypes.ENUM('Aprobado', 'Rechazado', 'En proceso', 'Elevado'),
             allowNull: false,
             defaultValue: 'En proceso'
         },

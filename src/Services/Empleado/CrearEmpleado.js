@@ -2,8 +2,11 @@
 const { sequelize } = require("../../Config/db");
 const { Empleado, Domicilio, Sector } = require("../../Config/db");
 const { traerSector } = require("../Sector/TraerSector");
+const { VacacionesXEmpleado } = require("../VacacionesXEmpleado/VacacionesXEmpleado");
+const { LicenciaXEmpleado } = require("../Tipos_de_licencia/LicenciasXEmpleado")
 
 
+// Crear empleado
 async function crearEmpleado(datos) {
     const t = await sequelize.transaction();
     
@@ -64,7 +67,8 @@ async function crearEmpleado(datos) {
         } catch (error) {
             console.error('Error al crear el empleado: ',error)    
         }
-        
+        await VacacionesXEmpleado(empleado.dataValues.id)
+        await LicenciaXEmpleado(empleado.dataValues.id)
         // console.log(empleado);
 
         return {

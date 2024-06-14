@@ -17,13 +17,13 @@ module.exports = async (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        dias_tomados: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
         dias_pendientes: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        ultima_renovacion: {
+            type: DataTypes.DATE,
+            allowNull: true
         },
 
     },

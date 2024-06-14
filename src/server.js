@@ -5,12 +5,14 @@ const morgan = require('morgan');
 const routes = require('./Routes/index');
 require('./Config/db');
 const {sequelize} = require('./Config/db');
+// const { bulkLicenciaXEmpleado } = require('./util/datosParaCargar/bulkLicenciaXEmpleado')
 
 const server = express();
 
 (async () => {
   try {
       await sequelize.authenticate();
+      // await bulkLicenciaXEmpleado();
       console.log('LA CONECCION A LA BASE DE DATOS SE ESTABLECIO CORRECTAMENTE');
   } catch (error) {
       console.error('ERROR AL CONECTAR CON LA BASE DE DATOS:', error);

@@ -56,14 +56,14 @@ const {
 Domicilio.hasMany(Empleado, { foreignKey: 'domicilio_id' });
 Empleado.belongsTo(Domicilio, { foreignKey: 'domicilio_id' });
 
-Sector.hasMany(Empleado, { foreignKey: 'sector_id' });
-Empleado.belongsTo(Sector, { foreignKey: 'sector_id' });
+Sector.hasMany(Empleado, {foreignKey: 'sector_id' });
+Empleado.belongsTo(Sector, {foreignKey: 'sector_id' });
 
 Empleado.hasOne(Supervisor);//un empleado tiene un cargo de supervisor
 Supervisor.belongsTo(Empleado);//un cargo de supervisor puede pertenecer a varios empleados(puede ser un supervisor por turno)
 
-Vacaciones_empleado.belongsTo(Tipo_vacaciones, { foreignKey: 'nombre', targetKey: 'nombre' })
-Tipo_vacaciones.hasMany(Vacaciones_empleado, { foreignKey: 'nombre', sourceKey: 'nombre' })
+Vacaciones_empleado.belongsTo(Tipo_vacaciones, { foreignKey: 'tipo', targetKey: 'nombre' })
+Tipo_vacaciones.hasMany(Vacaciones_empleado, { foreignKey: 'tipo', sourceKey: 'nombre' })
 
 Empleado.hasMany(Licencia_empleado, { foreignKey: 'empleado_id' });
 Licencia_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id' });
@@ -81,13 +81,9 @@ Supervisor.hasMany(Solicitud, { as: 'supervisor', foreignKey: 'supervisor_id' })
 Solicitud.belongsTo(Supervisor, {as : 'supervisor', foreignKey: 'supervisor_id' })
 
 /****** Relaciones de solicitudes de licencias y permisos ******/
-// Solicitud.hasOne(Tipo_permiso, { as: 'tipo', foreignKey: 'solicitud_id' });//un tipo de permiso aparece en muchos registros de solicitud
-// Solicitud.hasOne(Tipo_licencia, { foreignKey: 'solicitud_id' });//un tipo de licencia aparece en muchos registros de solicitud
-// Solicitud.hasOne(Tipo_vacaciones, { foreignKey: 'solicitud_id' });//un tipo de vacaciones aparece en muchos registros de solicitud
-
-// Tipo_permiso.belongsTo(Solicitud, { foreignKey: 'solicitud_id' });//solicitud se refiere a un tipo de permiso
-// Tipo_licencia.belongsTo(Solicitud, { foreignKey: 'solicitud_id' });//solicitud se refiere a un tipo de licencia
-// Tipo_vacaciones.belongsTo(Solicitud, { foreignKey: 'solicitud_id'});//solicitud se refiere a un tipo de vacaciones
+Solicitud.belongsTo(Tipo_licencia, { foreignKey: 'tipo', constraints: false });
+Solicitud.belongsTo(Tipo_permiso, { foreignKey: 'tipo', constraints: false });
+Solicitud.belongsTo(Tipo_vacaciones, { foreignKey: 'tipo', constraints: false });
 /****** Fin de la configuracion *******/ 
 
 // Tipo_de_solicitud.hasMany(Solicitud, { foreignKey: 'tipo_de_solicitud_id' });//un tipo de solicitud aparece en muchos registros de solicitud
