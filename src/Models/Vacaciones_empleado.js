@@ -21,6 +21,10 @@ module.exports = async (sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
+        ultima_renovacion: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
 
     },
     {

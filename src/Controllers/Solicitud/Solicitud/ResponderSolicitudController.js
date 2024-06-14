@@ -1,33 +1,45 @@
-const { ResponderSolicitudes } = require('../../../Services/Solicitudes/ResponderSolicitudes')
-
+const { ResponderSolicitudes, AutorizarSolicitud } = require('../../../Services/Solicitudes/ResponderSolicitudes');
 
 async function responderSolicitudController(req, res) {
-    try {        
-        const { solicitudId } = req.params
-        const { estado } = req.body
-        const respuesta = await ResponderSolicitudes( solicitudId, estado )
+    try {
+        const { solicitudId } = req.params;
+        const { estado } = req.body;
+        let respuesta = {};
+
+        if (estado === undefined || estado === null) {
+            respuesta = {
+                success: false,
+                error: 'El estado es requerido',
+                message: 'El estado es requerido'
+            };
+        } else if (estado === 'Elevado' || estado === 'Rechazado') {
+            respuesta = await ResponderSolicitudes(solicitudId, estado);
+        } else if (estado === 'Aprobado') {
+            respuesta = await AutorizarSolicitud(solicitudId, estado);
+        }
+
         if (respuesta.success) {
             res.status(200).json({
                 success: true,
                 data: respuesta.data,
                 message: respuesta.message
-            })
-        } else if (respuesta.error) {
-            res.status(400).json({ 
+            });
+        } else {
+            res.status(400).json({
                 success: false,
-                message: respuesta.message,
-                error: respuesta.error
-            })
-        }        
+                message: respuesta.message || 'Error desconocido',
+                error: respuesta.error || 'Error desconocido'
+            });
+        }
     } catch (error) {
         res.status(500).json({
             success: false,
             message: error.message,
             error: error
-        })        
-    }     
+        });
+    }
 }
 
 module.exports = {
     responderSolicitudController
-}
+};

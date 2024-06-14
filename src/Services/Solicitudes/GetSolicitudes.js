@@ -1,73 +1,71 @@
-const { Solicitud, Empleado, Supervisor, Tipo_licencia, Tipo_permiso, Tipo_vacaciones, Vacaciones_empleado, Op } = require('../../Config/db');
+const { Solicitud, Empleado, Supervisor, Tipo_licencia, Tipo_permiso, Tipo_vacaciones, Sector, Vacaciones_empleado, Op } = require('../../Config/db');
+const { BuscarSolicitudes } = require('./Util/BuscarSolicitudes')
 const Sequelize = require('sequelize');
 
 
-// Función para obtener las solicitudes
+//busca todas las solicitudes de un empleado
+const getSolicitudesXEmpleado = async (empleado_id) => {
+  try {
+    const solicitudes = await BuscarSolicitudes({ empleado_id: empleado_id });
+    if (solicitudes.length > 0) {
+      const resultado = solicitudes.map(solicitud => {
+        const sol = solicitud.toJSON()
 
+        return {
+          id: sol.id,
+          tipo: sol.tipo_solicitud,
+          nombre_tipo: sol.nombre_tipo_solicitud,
+          cant_dias: sol.cant_dias,
+          fecha: sol.fecha,
+          motivo: sol.motivo,
+          estado: sol.estado,
+          fecha_permiso: sol.fecha_permiso,
+          fecha_desde: sol.fecha_desde,
+          fecha_hasta: sol.fecha_hasta,
+          hora_ingreso: sol.hora_ingreso,
+          hora_salida: sol.hora_salida,
+          dia_compensatorio: sol.dia_compensatorio,
+          dias_solicitados: sol.dias_solicitados,
+        }
+      })
+
+      return {
+        success: true,
+        data: resultado,
+        message: 'Solicitudes obtenidas exitosamente.'
+      }
+    } else {
+      return {
+        success: false,
+        data: [],
+        message: 'No hay solicitudes.'
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      data: [],
+      message: `Error al obtener las solicitudes: ${error.message}`,
+      error: error
+    }
+  }
+
+}
+
+//trae todas la solicitudes de un sector
 const getSolicitudes = async (empleado_id) => {
-  try {    
+  try {
     const supervisor = await Supervisor.findOne({
       where: {
         empleadoId: empleado_id
       }
     });
 
-    const solicitudes = await Solicitud.findAll({
-      where: {
-        supervisor_id: supervisor.id
-      },
-      attributes: [
-        'id',
-        'fecha',
-        'motivo',
-        'estado',
-        'fecha_desde',
-        'fecha_hasta',
-        'hora_ingreso',
-        'hora_salida',
-        'fecha_permiso',
-        'dia_compensatorio',
-        'dias_solicitados',
-        'empleado_id',
-        [Sequelize.literal(`CASE 
-          WHEN Tipo_licencium.id IS NOT NULL THEN 'Licencia' 
-          WHEN Tipo_permiso.id IS NOT NULL THEN 'Permiso' 
-          WHEN Tipo_vacacione.id IS NOT NULL THEN 'Vacaciones' 
-        END`), 'tipo_solicitud'],
-        [Sequelize.fn('COALESCE', Sequelize.col('Tipo_licencium.nombre'), Sequelize.col('Tipo_permiso.nombre'), Sequelize.col('Tipo_vacacione.nombre')), 'nombre_tipo_solicitud'],
-        [Sequelize.fn('COALESCE', Sequelize.col('Tipo_licencium.cantDias'), Sequelize.col('Tipo_vacacione.cantDias')), 'cant_dias']
-      ],
-      include: [
-        {
-          model: Tipo_licencia,
-          as: 'Tipo_licencium',
-          attributes: []
-        },
-        {
-          model: Tipo_permiso,
-          as: 'Tipo_permiso',
-          attributes: []
-        },
-        {
-          model: Tipo_vacaciones,
-          as: 'Tipo_vacacione',
-          attributes: []
-        },
-        {
-          model: Empleado, as: 'empleado',
-          as: 'empleado',
-          attributes: ['nombre_empleado', 'apellido_empleado']
-        }
-      ],
-      group: ['Solicitud.id'],      
-      order: [['fecha', 'ASC']],
-
-    });
+    const solicitudes = await BuscarSolicitudes({ supervisor_id: supervisor.id });
     if (solicitudes.length > 0) {
-      // console.log(solicitudes.map(solicitud => solicitud.toJSON().empleado), '<== solicitudes');
       const resultado = solicitudes.map(solicitud => {
         const sol = solicitud.toJSON()
-        console.log(sol, '<== sol');
+
         return {
           // ...sol, 
           id: sol.id,
@@ -85,11 +83,10 @@ const getSolicitudes = async (empleado_id) => {
           hora_salida: sol.hora_salida,
           dia_compensatorio: sol.dia_compensatorio,
           dias_solicitados: sol.dias_solicitados,
-          empleado_id: sol.empleado_id
+          empleado_id: sol.empleado_id,
+          // sector: sol.empleado.sector.nombre_sector
         }
-      }
-      );
-      // console.log(resultado, '<== resultado');
+      });
 
       return {
         success: true,
@@ -103,7 +100,6 @@ const getSolicitudes = async (empleado_id) => {
         message: 'No hay solicitudes.'
       }
     }
-
   } catch (error) {
     return {
       success: false,
@@ -112,9 +108,66 @@ const getSolicitudes = async (empleado_id) => {
       error: error
     }
   }
-};
+}
 
-module.exports = { getSolicitudes };
+
+//busca todas las solicitudes elevadas a RRHH
+const getSolicitudesElevadas = async () => {
+  try {
+    const solicitudes = await BuscarSolicitudes({ estado: 'Elevado' })
+    // console.log(solicitudes.length, '<== estoy getSolicitudesElevadas');
+
+    if (solicitudes.length > 0) {
+      const resultado = solicitudes.map(solicitud => {
+        const sol = solicitud.toJSON()
+        // const sector = sol.empleado.Sector.nombre_sector;
+        // console.log(sector, '<== ese es el sector');
+
+        return {
+          id: sol.id,
+          empleado: sol.empleado.nombre_empleado + ' ' + sol.empleado.apellido_empleado,
+          tipo: sol.tipo_solicitud,
+          nombre_tipo: sol.nombre_tipo_solicitud,
+          cant_dias: sol.cant_dias,
+          fecha: sol.fecha,
+          motivo: sol.motivo,
+          estado: sol.estado,
+          fecha_permiso: sol.fecha_permiso,
+          fecha_desde: sol.fecha_desde,
+          fecha_hasta: sol.fecha_hasta,
+          hora_ingreso: sol.hora_ingreso,
+          hora_salida: sol.hora_salida,
+          dia_compensatorio: sol.dia_compensatorio,
+          dias_solicitados: sol.dias_solicitados,
+          empleado_id: sol.empleado_id,
+          sector: sol.empleado.Sector.nombre_sector
+        }
+      })
+      // console.log(resultado);
+      return {
+        success: true,
+        data: resultado,
+        message: 'Solicitudes elevadas obtenidas exitosamente.'
+      }
+    } else {
+      return {
+        success: false,
+        data: [],
+        message: 'No hay solicitudes elevadas.'
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error al obtener las solicitudes elevadas: ${error.message}`,
+      error: error
+    }
+  }
+}
+
+
+
+module.exports = { getSolicitudes, getSolicitudesElevadas, getSolicitudesXEmpleado };
 
 
 
