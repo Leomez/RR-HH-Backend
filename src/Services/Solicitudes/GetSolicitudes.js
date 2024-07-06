@@ -2,6 +2,54 @@ const { Solicitud, Empleado, Supervisor, Tipo_licencia, Tipo_permiso, Tipo_vacac
 const { BuscarSolicitudes } = require('./Util/BuscarSolicitudes')
 const Sequelize = require('sequelize');
 
+//busca todas las solicitudes en la base
+const getAllSolicitudes = async () => {
+  try {
+    const solicitudes = await BuscarSolicitudes();
+    if (solicitudes.length > 0) {
+      const resultado = solicitudes.map(solicitud => {
+        const sol = solicitud.toJSON()
+        return {
+          id: sol.id,
+          empleado: sol.empleado.nombre_empleado + ' ' + sol.empleado.apellido_empleado,
+          tipo: sol.tipo_solicitud,
+          nombre_tipo: sol.nombre_tipo_solicitud,
+          cant_dias: sol.dias_pendientes,
+          // fecha: sol.fecha,
+          // motivo: sol.motivo,
+          estado: sol.estado,
+          fecha_permiso: sol.fecha_permiso,
+          fecha_desde: sol.fecha_desde,
+          fecha_hasta: sol.fecha_hasta,
+          hora_ingreso: sol.hora_ingreso,
+          hora_salida: sol.hora_salida,
+          dia_compensatorio: sol.dia_compensatorio,
+          dias_solicitados: sol.dias_solicitados,
+          empleado_id: sol.empleado_id,
+          sector: sol.empleado.Sector.nombre_sector
+        }
+      })
+      return {
+        success:true,
+        message: 'Solicitudes obtenidas exitosamente.',
+        data: resultado
+      }
+    } else {
+      return {
+        success:false,
+        message: 'No hay solicitudes.'
+      }
+    }
+  } catch (error) {
+    return {
+      success: false,
+      data: [],
+      message: error.message,
+      error: error
+    }
+  }
+}
+
 
 //busca todas las solicitudes de un empleado
 const getSolicitudesXEmpleado = async (empleado_id) => {
@@ -49,7 +97,6 @@ const getSolicitudesXEmpleado = async (empleado_id) => {
       error: error
     }
   }
-
 }
 
 //trae todas la solicitudes de un sector
@@ -84,7 +131,6 @@ const getSolicitudes = async (empleado_id) => {
           dia_compensatorio: sol.dia_compensatorio,
           dias_solicitados: sol.dias_solicitados,
           empleado_id: sol.empleado_id,
-          // sector: sol.empleado.sector.nombre_sector
         }
       });
 
@@ -114,21 +160,19 @@ const getSolicitudes = async (empleado_id) => {
 //busca todas las solicitudes elevadas a RRHH
 const getSolicitudesElevadas = async () => {
   try {
-    const solicitudes = await BuscarSolicitudes({ estado: 'Elevado' })
-    // console.log(solicitudes.length, '<== estoy getSolicitudesElevadas');
+    const solicitudes = await BuscarSolicitudes({ estado: 'Elevado' })    
 
     if (solicitudes.length > 0) {
       const resultado = solicitudes.map(solicitud => {
-        const sol = solicitud.toJSON()
-        // const sector = sol.empleado.Sector.nombre_sector;
-        // console.log(sector, '<== ese es el sector');
+        const sol = solicitud.toJSON()        
+        console.log(sol, '<== estoy en getSolicitudesElevadas');
 
         return {
           id: sol.id,
           empleado: sol.empleado.nombre_empleado + ' ' + sol.empleado.apellido_empleado,
           tipo: sol.tipo_solicitud,
           nombre_tipo: sol.nombre_tipo_solicitud,
-          cant_dias: sol.cant_dias,
+          cant_dias: sol.dias_pendientes,
           fecha: sol.fecha,
           motivo: sol.motivo,
           estado: sol.estado,
@@ -142,8 +186,7 @@ const getSolicitudesElevadas = async () => {
           empleado_id: sol.empleado_id,
           sector: sol.empleado.Sector.nombre_sector
         }
-      })
-      // console.log(resultado);
+      })      
       return {
         success: true,
         data: resultado,
@@ -167,7 +210,7 @@ const getSolicitudesElevadas = async () => {
 
 
 
-module.exports = { getSolicitudes, getSolicitudesElevadas, getSolicitudesXEmpleado };
+module.exports = { getSolicitudes, getSolicitudesElevadas, getSolicitudesXEmpleado, getAllSolicitudes };
 
 
 
