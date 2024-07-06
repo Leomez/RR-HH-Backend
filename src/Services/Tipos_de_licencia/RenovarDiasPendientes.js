@@ -6,7 +6,7 @@ async function RenovarDiasPendientes(id_empleado, nombre_tipo_solicitud, diasSol
 
     try {
         // Obtener la fecha actual
-        const hoy = new Date();
+        const hoy = new Date();        
         const mesActual = hoy.getMonth() + 1; // getMonth() retorna 0 para enero, por lo que sumamos 1
         const diaActual = hoy.getDate();
         const añoActual = hoy.getFullYear();

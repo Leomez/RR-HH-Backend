@@ -65,14 +65,14 @@ Supervisor.belongsTo(Empleado);//un cargo de supervisor puede pertenecer a vario
 Vacaciones_empleado.belongsTo(Tipo_vacaciones, { foreignKey: 'tipo', targetKey: 'nombre' })
 Tipo_vacaciones.hasMany(Vacaciones_empleado, { foreignKey: 'tipo', sourceKey: 'nombre' })
 
-Empleado.hasMany(Licencia_empleado, { foreignKey: 'empleado_id' });
-Licencia_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id' });
+Empleado.hasMany(Licencia_empleado, { foreignKey: 'empleado_id', constraints: false });
+Licencia_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id', constraints: false });
 
 Sector.hasMany(Supervisor);
 Supervisor.belongsTo(Sector);
 
-Empleado.hasOne(Vacaciones_empleado, { foreignKey: 'empleado_id' });
-Vacaciones_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id' });
+Empleado.hasOne(Vacaciones_empleado, { foreignKey: 'empleado_id', constraints: false });
+Vacaciones_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id', constraints: false });
 
 Empleado.hasMany(Solicitud, { as: 'empleado', foreignKey: 'empleado_id'});
 Solicitud.belongsTo(Empleado, { as: 'empleado', foreignKey: 'empleado_id'});

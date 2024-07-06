@@ -32,7 +32,7 @@ async function AutorizarSolicitud(id, estado) {
     try {
         const solicitud = await BuscarSolicitudes({ id: id })
         const sol = solicitud[0].toJSON()
-
+        console.log(sol);
         //autorizo las vacaciones
         if (sol && sol.tipo_solicitud.toLowerCase() === 'vacaciones') {
             // console.log(sol, estado); 
