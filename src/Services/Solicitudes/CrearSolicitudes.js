@@ -12,8 +12,9 @@ async function crearSolicitudes(solicitud) {
     try {
         console.log(solicitud);
         const empleado = await Empleado.findByPk(solicitud.empleado_id);
-        // console.log(empleado.dataValues.sector_id);
-        const supervisor = await TraerSupervisores(empleado.dataValues.sector_id);     
+        console.log(empleado.dataValues.sector_id, 'empleado/sectorId en crearSolicitudes');
+        const supervisor = await TraerSupervisores(empleado.dataValues.sector_id);   
+        console.log(supervisor, 'supervisor en crearSolicitudes');  
 
         const respuesta = await Solicitud.create({
             fecha: formatDate(solicitud.fecha),

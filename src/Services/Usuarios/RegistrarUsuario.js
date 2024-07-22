@@ -12,11 +12,11 @@ async function CrearUsuario(datos) {
 
   const { email, password } = datos;
   const auth = getAuth(app);
-
+  // console.log(datos);
   try {
     const usuarioAutorizado = await Empleado.findOne({
       where: { correo: email }
-    })      
+    })      //<---me quede aca hay que controlar esto
 
     if (usuarioAutorizado === null) {
       return {
@@ -41,6 +41,7 @@ async function CrearUsuario(datos) {
         rol: usuarioAutorizado.dataValues.permisos,
         EmpleadoId: usuarioAutorizado.dataValues.id
       })
+      console.log(nuevoUsuario);
       return {
         success: true,
         message: 'Usuario creado exitosamente',
