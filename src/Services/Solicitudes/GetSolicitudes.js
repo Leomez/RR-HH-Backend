@@ -2,6 +2,9 @@ const { Solicitud, Empleado, Supervisor, Tipo_licencia, Tipo_permiso, Tipo_vacac
 const { BuscarSolicitudes } = require('./Util/BuscarSolicitudes')
 const Sequelize = require('sequelize');
 
+const usePostgresBackup = process.env.USE_PG_BACKUP === 'true';
+
+
 //busca todas las solicitudes en la base
 const getAllSolicitudes = async () => {
   try {
@@ -102,9 +105,10 @@ const getSolicitudesXEmpleado = async (empleado_id) => {
 //trae todas la solicitudes de un sector
 const getSolicitudes = async (empleado_id) => {
   try {
+    const empleadoId = usePostgresBackup ? "EmpleadoId" : "empleadoId";
     const supervisor = await Supervisor.findOne({
       where: {
-        empleadoId: empleado_id
+        empleadoId : empleado_id
       }
     });
 

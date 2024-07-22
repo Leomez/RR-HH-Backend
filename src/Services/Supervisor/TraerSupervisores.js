@@ -8,11 +8,11 @@ async function TraerSupervisores(sectorId) {
                 where: {
                     SectorId: sectorId
                 },
-                attributes: ['id', 'codigo', 'EmpleadoId', 'SectorId']
+                attributes: ['id', 'codigo', 'empleadoId', 'SectorId']
             })
         } else {
             superv = await Supervisor.findAll({
-                attributes: ['id', 'codigo', 'EmpleadoId', 'SectorId']
+                attributes: ['id', 'codigo', 'empleadoId', 'SectorId']
             })
         }
 
