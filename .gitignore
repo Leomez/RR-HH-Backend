@@ -1,5 +1,4 @@
 /node_modules
 # /uploads/
-# /src/util/datosParaCargar
-
+/src/util/datosParaCargar
 .env
