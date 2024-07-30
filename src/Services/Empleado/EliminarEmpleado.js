@@ -15,13 +15,15 @@ async function eliminarEmpleado(id) {
         })
         return {
             success: true,
-            message: 'Empleado eliminado'            
+            message: 'Empleado eliminado',
+            status: 200
         }
         
     } catch (error) {
         return {
             success: false,
-            message: error.message
+            message: error.message,
+            status: 500
         }
     }
 }

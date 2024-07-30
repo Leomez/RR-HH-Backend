@@ -6,12 +6,12 @@ async function crearSolicitudController(req, res) {
     //    const {solicitud} = req.body
        const respuesta = await crearSolicitudes(req.body)
        if (respuesta.success) {
-        res.status(200).json({
+        res.status(respuesta.status).json({
             message: respuesta.message,
             data: respuesta.data,            
         })
        } else {
-        res.status(400).json({
+        res.status(respuesta.status).json({
             message: `Error en el controlador: ${respuesta.message}`,
             data: respuesta.data,
             error: respuesta.error

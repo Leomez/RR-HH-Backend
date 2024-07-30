@@ -14,13 +14,15 @@ async function ResponderSolicitudes(id, estado) {
         return {
             success: true,
             message: "Solicitud respondida correctamente",
-            data: { nuevoEstado: solicitud.estado }
+            data: { nuevoEstado: solicitud.estado },
+            status: 200
         }
     } catch (error) {
         return {
             success: false,
             error: error,
-            message: error.message
+            message: error.message,
+            status: 500
         }
 
     }
@@ -43,13 +45,15 @@ async function AutorizarSolicitud(id, estado) {
                 return {
                     success: false,
                     error: actualizacion.error,
-                    message: actualizacion.message
+                    message: actualizacion.message,
+                    status: 500
                 }
             }
             return {
                 success: true,
                 message: "Solicitud autorizada correctamente",
-                data: { nuevoEstado: estado }
+                data: { nuevoEstado: estado },
+                status: 200
             }
         }
         //autorizo la otras licencias
@@ -62,13 +66,15 @@ async function AutorizarSolicitud(id, estado) {
                 return {
                     success: false,
                     error: actualizacion.error,
-                    message: actualizacion.message
+                    message: actualizacion.message,
+                    status: 500
                 }
             }
             return {
                 success: true,
                 message: "Solicitud autorizada correctamente",
-                data: { nuevoEstado: estado }
+                data: { nuevoEstado: estado },
+                status: 200
             }
         }
         //autorizo los permisos
@@ -77,19 +83,22 @@ async function AutorizarSolicitud(id, estado) {
             return {
                 success: true,
                 message: "Solicitud autorizada correctamente",
-                data: { nuevoEstado: estado }
+                data: { nuevoEstado: estado },
+                status: 200
             }
         }
         return {
             success: false,
-            message: "Solicitud no autorizada"
+            message: "Solicitud no autorizada",
+            status: 400
         }
     } catch (error) {
         console.log(error);
         return {
             success: false,
             error: error,
-            message: error.message
+            message: error.message,
+            status: 500
         }
     }
 }

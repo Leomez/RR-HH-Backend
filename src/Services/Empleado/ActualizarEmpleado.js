@@ -10,7 +10,7 @@ async function actualizarEmpleado(id, datos) {
     console.log(domicilio);
     console.log(sector);
     console.log(datosEmpleado);
-
+    
     if (domicilio) {
       const [domicilioActualizado] = await Domicilio.upsert(domicilio, {
         where: {
@@ -29,7 +29,7 @@ async function actualizarEmpleado(id, datos) {
       const sect = await traerSector(sector);      
       datosEmpleado.sector = sect.id;
     }
-    console.log('estoy en la linea 32');
+    // console.log('estoy en la linea 32');
     const empleadoActualizado = await Empleado.update(    
       datosEmpleado,
       {
@@ -41,19 +41,21 @@ async function actualizarEmpleado(id, datos) {
       }
     );
 
-    console.log('estoy en la linea 46');
+    // console.log('estoy en la linea 46');
     await t.commit();
 
     return {
       success: true,
       message: 'Empleado actualizado',
-      data: empleadoActualizado
+      data: empleadoActualizado,
+      status: 200
     };
   } catch (error) {
     return {
       success: false,
       message: "Error al modificar el empleado",
-      error: error.message
+      error: error.message,
+      status: 500
     };
   }
 }

@@ -13,19 +13,22 @@ async function crearSector(sector) {
             return {
                 success: false,
                 mensaje: 'error al crear el sector',
-                error: error.message
+                error: error.message,
+                status: 500
             }
         }        
         return {
             success: true,
             mensaje: 'Sector creado con exito',
             sector: s,
+            status: 200
         }
     } catch (error) {        
         return {
             success: false,
             mensaje: 'error al crear el sector',
-            error: error.message
+            error: error.message,
+            status: 500
         }
     }
 }

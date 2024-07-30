@@ -3,14 +3,15 @@ const { getSolicitudes, getSolicitudesElevadas, getSolicitudesXEmpleado, getAllS
 // Maneja la respuesta de la API
 function handleResponse(res, respuesta) {
     if (respuesta.success) {
-        return res.status(200).json({
+        return res.status(respuesta.status).json({
             success: true,
             data: respuesta.data,
-            message: respuesta.message
+            message: respuesta.message,
+            
         });
     } else {
-        return res.status(400).json({
-            success: false,
+        return res.status(respuesta.status).json({
+            success: respuesta.success,
             message: respuesta.message,
             error: respuesta.error
         });
@@ -28,6 +29,7 @@ function handleError(res, error) {
 
 // Función base para manejar las solicitudes
 async function baseController(req, res, serviceFunction, id) {
+    console.log(`estoy en el contrlador de solicitudes...`);
     try {
         const respuesta = id ? await serviceFunction(id) : await serviceFunction();
         return handleResponse(res, respuesta);

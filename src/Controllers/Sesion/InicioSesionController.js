@@ -7,14 +7,14 @@ async function InicioSesionController(req, res) {
         const resultado = await IniciarSesion(user)
         if (resultado.success) {
             resultado.data.token = req.token
-            res.status(200).json({
+            res.status(resultado.status).json({
                 success: true,
                 message: resultado.message,
                 data: resultado.data
             });
         } else {
             console.log(resultado.mensaje);
-            res.status(500).json({
+            res.status(resultado.status).json({
                 success: false,
                 message: resultado.message,
                 error: resultado.error

@@ -2,7 +2,9 @@ require('dotenv').config()
 const { Solicitud, Tipo_licencia, Tipo_permiso, Tipo_vacaciones, /*Vacaciones_empleado, Licencia_empleado,*/ Empleado, Sector } = require('../../../Config/db');
 const { Sequelize } = require('sequelize');
 
-const usePostgresBackup = process.env.USE_PG_BACKUP === 'true';
+const usePostgresBackup = process.env.USE_PG_BACKUP === 'true' || process.env.USE_PG_URL === 'true';
+
+console.log(`Base PG habilitada: ${usePostgresBackup}`);
 
 const BuscarSolicitudesMySql = async (where) => {
     try {
@@ -159,7 +161,7 @@ const BuscarSolicitudesPostgres = async (where) => {
             ],
             order: [['fecha', 'ASC']],
         });
-
+        // console.log(solicitudes, '<--- solicitudes en getSolicitudesPostgres');
         return solicitudes;
     } catch (error) {
         console.error('Error al buscar solicitudes:', error);
@@ -167,7 +169,10 @@ const BuscarSolicitudesPostgres = async (where) => {
     }
 }
 
-const BuscarSolicitudes = usePostgresBackup ? BuscarSolicitudesPostgres : BuscarSolicitudesMySql;
+const BuscarSolicitudes = 
+// usePostgresBackup ? 
+BuscarSolicitudesPostgres 
+// : BuscarSolicitudesMySql;
 
 
 module.exports = { BuscarSolicitudes }

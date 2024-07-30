@@ -26,20 +26,23 @@ async function get_tipos_licencia() {
             return {
                 success: true,
                 data: respuesta,
-                message: 'Tipos de licencia recuperados correctamente'
+                message: 'Tipos de licencia recuperados correctamente',
+                status: 200
             }
         } else {
             return {
                 success: false,
                 data: null,
-                message: 'No hay tipos de licencia cargados'
+                message: 'No hay tipos de licencia cargados',
+                status: 400
             }
         }
     } catch (error) {
         return {
             success: false,
             data: null,
-            message: 'Error al recuperar los tipos de licencia'
+            message: 'Error al recuperar los tipos de licencia',
+            status: 500
         }
     }
 }
@@ -65,7 +68,8 @@ async function get_tipos_vacaciones(empleado_id) {
             return {
                 success: false,
                 data: null,
-                message: 'No hay tipos de vacaciones cargados'
+                message: 'No hay tipos de vacaciones cargados',
+                status: 400
             }
         } else {
             //respondo si encuentro tipos cargados
@@ -102,7 +106,8 @@ async function get_tipos_vacaciones(empleado_id) {
         return {
             success: false,
             data: null,
-            message: 'Error al recuperar los tipos de vacaciones'
+            message: 'Error al recuperar los tipos de vacaciones',
+            status: 500
         }
     }
 }

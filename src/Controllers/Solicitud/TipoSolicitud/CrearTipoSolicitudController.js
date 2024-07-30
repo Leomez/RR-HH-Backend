@@ -7,13 +7,13 @@ const crearTipoSolicitud = async (req, res) => {
   try {
     const respuesta = await CrearTipoSolicitud({ nombre, caracteristicas });
     if (!respuesta.success) {
-      res.status(400).json({
+      res.status(respuesta.status).json({
         success: respuesta.success,
         message: respuesta.mensaje,
         error: respuesta.error
       });
     } else {
-      res.status(200).json({
+      res.status(respuesta.status).json({
         success: respuesta.success,
         message: respuesta.mensaje,
         tipo_solicitud: respuesta.tipo_solicitud

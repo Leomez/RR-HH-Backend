@@ -9,7 +9,8 @@ async function CrearTipoSolicitud({nombre, caracteristicas}) {
         return {
             success: true,
             mensaje: 'Tipo de solicitud creado con exito',
-            tipo_solicitud
+            tipo_solicitud,
+            status: 200
         }
     } catch (error) {
         return {
@@ -18,7 +19,8 @@ async function CrearTipoSolicitud({nombre, caracteristicas}) {
             error: {
                 codigo: error.codigo,
                 mensaje: error.message
-            }
+            },
+            status: 500
         }
     }
 }
