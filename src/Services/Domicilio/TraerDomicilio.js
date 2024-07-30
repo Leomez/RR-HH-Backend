@@ -8,20 +8,23 @@ async function TraerDomicilio() {
             return {
                 success: true,
                 message: 'Domicilios encontrados',
-                data: domicilios
+                data: domicilios,
+                status: 200
             }            
         } else {
             return {
                 success: false,
                 message: 'Nose encontro ningun resultado',
-                data: null
+                data: null,
+                status: 404
             }
         }        
     } catch (error) {
         return {
             success: false,
             message:`Error en la base de datos: ${error.message}`,
-            data: null
+            data: null,
+            status: 500
         }
     }
 }

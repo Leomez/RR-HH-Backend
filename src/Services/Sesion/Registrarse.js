@@ -10,7 +10,8 @@ async function registrarse(user) {
             return {
                 success: false,
                 mensaje: 'No se encontró ningun empleado con ese correo elctrónico en la base de datos',
-                error: 'Empleado no encontrado'
+                error: 'Empleado no encontrado',
+                status: 404
             }
         } else {
             const usuario = await Usuario.create({
@@ -23,14 +24,16 @@ async function registrarse(user) {
             return {                
                 success: true,
                 message: 'Usuario creado exitosamente',
-                data: usuario
+                data: usuario,
+                status: 200
             }
         }        
     } catch (error) {        
         return {
             success: false,
             message: 'Error al crear el usuario: ',
-            error: new Error(error.message)
+            error: new Error(error.message),
+            status: 500
         }
     }
 

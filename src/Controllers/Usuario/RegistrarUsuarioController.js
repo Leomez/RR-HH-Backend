@@ -6,13 +6,13 @@ async function RegistrarUsuario(req, res) {
         const respuesta = await CrearUsuario(userData)
         console.log('respuesta del controlador: '+ respuesta);
         if (respuesta.success) {
-            res.status(200).json({
+            res.status(respuesta.status).json({
                 success: true,
                 message: respuesta.message,
                 data: respuesta.data
             });
         } else {
-            res.status(500).json({
+            res.status(respuesta.status).json({
                 success: false,
                 message: respuesta.message,
                 error: respuesta.error

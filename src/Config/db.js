@@ -45,9 +45,8 @@ const {
     Comun_int_empl, 
     Solicitud, 
     Certificado, 
-    Puesto, 
-    Recibo_de_sueldo, 
-    Solicitud_de_puesto, 
+    // Puesto, 
+    Recibo_de_sueldo,      
     Usuario, 
     Asistencia 
 } = sequelize.models;
@@ -92,14 +91,14 @@ Solicitud.belongsTo(Tipo_vacaciones, { foreignKey: 'tipo', constraints: false })
 Solicitud.hasMany(Certificado, { foreignKey: 'solicitud_id'});
 Certificado.belongsTo(Solicitud, {foreignKey: 'solicitud_id'});
 
-Sector.hasMany(Puesto);
-Puesto.belongsTo(Sector);//puesto se refiere a posicion para busqueda de candidato
+// Sector.hasMany(Puesto);
+// Puesto.belongsTo(Sector);//puesto se refiere a posicion para busqueda de candidato
 
 Comun_int.belongsToMany(Empleado, { through: Comun_int_empl });
 Empleado.belongsToMany(Comun_int, { through: Comun_int_empl });
 
-Puesto.hasMany(Solicitud_de_puesto);
-Solicitud_de_puesto.belongsTo(Puesto);
+// Puesto.hasMany(Solicitud_de_puesto);
+// Solicitud_de_puesto.belongsTo(Puesto);
 
 // Sector.hasMany(Puesto);
 // Puesto.belongsTo(Sector);

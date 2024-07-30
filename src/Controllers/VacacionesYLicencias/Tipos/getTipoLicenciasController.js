@@ -5,13 +5,13 @@ async function getTipoLicencias(req, res) {
         console.log('controlador getTipoLicencias')
         const respuesta = await get_tipos_licencia()
         if (respuesta.success) {
-            res.status(200).json({
+            res.status(respuesta.status).json({
                 success: true,
                 data: respuesta.data,
                 message: respuesta.message
             })
         } else {
-            res.status(400).json({
+            res.status(respuesta.status).json({
                 success: false,
                 data: respuesta.data,
                 message: respuesta.message

@@ -35,13 +35,15 @@ async function crearSolicitudes(solicitud) {
         return {
             success: true,
             message: "Solicitud creada correctamente",
-            data: respuesta
+            data: respuesta,
+            status: 200
         }
     } catch (error) {
         return {
             success: false,
             message: error.message,
-            error: error
+            error: error,
+            status: 500
         }
     }
 
