@@ -18,7 +18,7 @@ async function AuthToken(req, res, next) {
         if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
             const token = req.headers.authorization.split(' ')[1];
             console.log('validando token de autorizacion...');
-            console.log(token);            
+            console.log('token recibido: ',token);            
             const decodedToken = await auth.verifyIdToken(token);            
             req.token = token;
             req.user = decodedToken;
