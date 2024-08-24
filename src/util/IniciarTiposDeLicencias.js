@@ -1,7 +1,9 @@
 const { Tipo_vacaciones, Tipo_licencia, Tipo_permiso } = require('../Config/db'); // Asumiendo que los modelos están definidos en 'models.js'
 const { tipoLicencias, tiposVacaciones, tipoPermisos } = require('./datosParaCargar/licenciasYVacaciones')
 
-// Función para crear registros base para Tipo_vacaciones y Tipo_licencia
+// Función para crear registros base para Tipo_vacaciones, Tipo_licencia, y Tipo_permiso
+// se usa para cargar una lista de tipos para las diferentes solicitudes. Si no se cargan no habra 
+// opciones para las solicitudes de perisos o licencias
 
 async function crearRegistrosLicenciaYVacaciones() {
 

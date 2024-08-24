@@ -3,10 +3,7 @@ const { crearEmpleado } = require('../Services/Empleado/CrearEmpleado')
 const { crearSector } = require('../Services/Sector/CrearSector')
 //datos...
 const empleados = require('./datosParaCargar/empleados.json')
-const adminInicial = require('./datosParaCargar/adminInicial.json')
 const sectores = require('./datosParaCargar/sectores.json')
-
-
 
 
 async function iniciarDatos() {    
