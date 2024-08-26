@@ -17,6 +17,7 @@ module.exports = async (sequelize) => {
     dni: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isNumeric: {
           msg: 'El DNI debe contener solo números'

@@ -12,6 +12,9 @@
 
 const server = require('./src/server')
 const { conn } = require('./src/Config/db');
+const { performance } = require('perf_hooks');
+const { crearEmpleadoDePrueba } = require('./src/util/datosParaCargar/adminDePrueba')
+
 // const { crearRegistrosLicenciaYVacaciones } = require('./src/util/IniciarTiposDeLicencias')
 // const { iniciarDatos } = require('./src/util/IniciarDatosDePrueba')
 
@@ -22,6 +25,7 @@ const startServer = async () => {
     await conn.sync({ force: false });
     const end = performance.now();
     const syncTimeInSeconds = (end - start) / 1000;
+    await crearEmpleadoDePrueba();
 
     server.listen(port, async () => {
         // await crearRegistrosLicenciaYVacaciones()
