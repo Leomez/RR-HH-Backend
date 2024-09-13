@@ -9,6 +9,8 @@ const Recibos = require('./RecibosRuta')
 const Notificaciones = require('./Notificaciones')
 const Supervisor = require('./SupervisorRuta')
 const Licencias = require('./LicenciasYPermisosRuta')
+const Asistencia = require('./Asistencia')
+
 const { CrearAdmin } = require('./CrearAdmin')
 const { AuthToken } = require('../Middleware/authToken')
 const router = Router();
@@ -32,6 +34,8 @@ router.use('/recibos', Recibos)
 router.use('/notificaciones', Notificaciones)
 router.use('/supervisor', Supervisor)
 router.use('/licencias', Licencias)
+router.use('/asistencia', Asistencia)
+
 
 
 module.exports = router;
