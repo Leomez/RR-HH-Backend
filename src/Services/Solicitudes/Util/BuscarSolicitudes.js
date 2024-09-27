@@ -170,9 +170,9 @@ const BuscarSolicitudesPostgres = async (where) => {
 }
 
 const BuscarSolicitudes = 
-// usePostgresBackup ? 
+usePostgresBackup ? 
 BuscarSolicitudesPostgres 
-// : BuscarSolicitudesMySql;
+: BuscarSolicitudesMySql;
 
 
 module.exports = { BuscarSolicitudes }

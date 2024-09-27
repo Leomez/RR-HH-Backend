@@ -81,7 +81,7 @@ async function RegistrarInicioDePausa(empleadoId) {
     const getCurrentTime = () => new Date().toTimeString().split(' ')[0];
     const fecha = getTodayDate();
     const hora_pausa_comer = getCurrentTime();
-
+    console.log(empleadoId);
     try {
         const asistencia = await Asistencia.findOne({
             where: {
@@ -130,7 +130,7 @@ async function RegistrarFinDePausa(empleadoId) {
             }
         });
         if (asistencia) {
-            asistencia.hora_regreso_pausa_comer = hora_regreso_pausa;
+            asistencia.hora_regreso_pausa = hora_regreso_pausa;
             await asistencia.save();
             return {
                 success: true,
