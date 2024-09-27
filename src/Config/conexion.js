@@ -93,7 +93,14 @@ function conexion(db) {
         case "USE_POSTEGRES_URL":
             return sequelizePgUrl
         default:
-            return sequelizeMySQL
+            {
+                console.log(`host ${DB_HOST}`);
+                console.log(`port ${DB_PORT}`);
+                console.log(`password ${DB_PASSWORD}`);
+                console.log(`user ${DB_USER}`);
+                console.log(`name ${DB_NAME}`);
+                return sequelizeMySQL
+            }
     }
 }
 
