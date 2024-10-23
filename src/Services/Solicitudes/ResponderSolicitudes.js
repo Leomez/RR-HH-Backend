@@ -2,14 +2,36 @@ const { Solicitud } = require("../../Config/db")
 const { actualizarDiasPendientes } = require('../VacacionesXEmpleado/VacacionesXEmpleado')
 const { BuscarSolicitudes } = require('./Util/BuscarSolicitudes')
 const { RenovarDiasPendientes } = require('../Tipos_de_licencia/RenovarDiasPendientes')
+const { crearNotificaciones } = require('../Notificaciones/crearNotificaciones')
+
+
 
 
 //responde solicitud por supervisor. Cambia estado de la solicitud a ELEVADO o RECHAZADO
 async function ResponderSolicitudes(id, estado) {
     try {
         await Solicitud.update({ estado }, { where: { id } })
-        const solicitudActualizada = await Solicitud.findByPk(id)
+        const solicitudActualizada = await Solicitud.findByPk(id, { include: [{ all: true }] })
         const solicitud = solicitudActualizada.toJSON()
+        console.log(solicitud, 'en ResponderSolicitudes linea 16')
+
+        let nombre_tipo_solicitud = null
+
+        if (solicitud.Tipo_licencium) {
+            nombre_tipo_solicitud = solicitud.Tipo_licencium.nombre
+        } else if (solicitud.Tipo_permiso) {
+            nombre_tipo_solicitud = solicitud.Tipo_permiso.nombre
+        } else if (solicitud.Tipo_vacacione) {
+            nombre_tipo_solicitud = solicitud.Tipo_vacacione.nombre
+        }
+        console.log(nombre_tipo_solicitud, ' nombre_tipo_solicitud ***');
+        await crearNotificaciones({
+            empleado_id: solicitud.empleado_id,
+            tipo: "Estado de Solicitud",
+            mensaje: `Tu solicitud de ${nombre_tipo_solicitud} ha sido ${estado}`,
+            fecha: new Date(),
+            estado: "pending"
+        })
 
         return {
             success: true,
