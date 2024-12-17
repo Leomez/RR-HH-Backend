@@ -14,7 +14,7 @@ async function ObtenerNotificaciones(id) {
         empleado_id: id
       }
     })
-    console.log(notificacionesEnLaBase);
+    // console.log(notificacionesEnLaBase);
     
     if (recibos && recibos.length > 0) {      
       recibos.forEach((recibo) => {        
@@ -31,6 +31,7 @@ async function ObtenerNotificaciones(id) {
     if (notificacionesEnLaBase && notificacionesEnLaBase.length > 0) {
       notificacionesEnLaBase.forEach((notificacion) => {
         notificaciones.push({
+          id: notificacion.id,
           tag: notificacion.tipo,
           titulo: notificacion.tipo,
           contenido: notificacion.mensaje,
@@ -39,7 +40,8 @@ async function ObtenerNotificaciones(id) {
             month: "short",
             year: "numeric",
           }),
-          accion: notificacion.estado,
+          estado: notificacion.estado,
+          accion: notificacion.estado ? "pending": "Ver mas",
         });
       })
     }

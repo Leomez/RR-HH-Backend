@@ -1,5 +1,5 @@
 const { IniciarSesion } = require('../../Services/Sesion/IniciarSesion')
-const { catchAsync } = require('../../util/catchAsync')
+const { catchAsync } = require('../../Middleware/catchAsync')
 
 
 async function InicioSesionController(req, res) {

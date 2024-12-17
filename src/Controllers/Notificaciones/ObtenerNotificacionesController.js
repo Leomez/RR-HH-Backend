@@ -1,5 +1,5 @@
 const { ObtenerNotificaciones } = require('../../Services/Notificaciones/ObtenerNotificaciones')
-const { catchAsync } = require('./../../util/catchAsync')
+const { catchAsync } = require('../../Middleware/catchAsync')
 
 
 async function obtenerNotificaciones(req, res) {
