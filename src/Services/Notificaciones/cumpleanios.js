@@ -16,7 +16,7 @@ const cumpleanios = async () => {
       //   ],
       // },
     });
-    console.log(cumpleanieros);
+    // console.log(cumpleanieros);
     const cumples = cumpleanieros.map((c) => {
       return {
         tag: "cumple",

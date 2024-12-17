@@ -1,21 +1,25 @@
-const { Usuario, Empleado } = require('../../Config/db')
-const { registrarse } = require('./Registrarse')
+const { Usuario, Empleado } = require('../../Config/db');
+const { registrarse } = require('./Registrarse');
+// const { appError } = require('../../util/appError')
+
 
 async function IniciarSesion(user) {    
     try {
         console.log(user);
         const empleadoHabilitado = await Empleado.findOne({
             where: { correo: user.email }
-        })
+          });
         // let todosLosUsuarios = await Usuario.findAll()
         // console.log(todosLosUsuarios);
         console.log(empleadoHabilitado);
-        const empleados = await Empleado.findAll()
-        console.log(empleados, '<--- empleados');
+        // const empleados = await Empleado.findAll()
+        // console.log(empleados, '<--- empleados');
         let currentUser = await Usuario.findOne({
             where: { id: user.uid  }
         })
-        console.log(currentUser);
+
+        // console.log(currentUser);
+        
         if (!currentUser) {
             if (!empleadoHabilitado) {
                 return {

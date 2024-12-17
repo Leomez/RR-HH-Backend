@@ -48,7 +48,8 @@ const {
     // Puesto, 
     Recibo_de_sueldo,      
     Usuario, 
-    Asistencia 
+    Asistencia,
+    Notificaciones 
 } = sequelize.models;
 
 // definicion de relaciones
@@ -66,6 +67,9 @@ Tipo_vacaciones.hasMany(Vacaciones_empleado, { foreignKey: 'tipo', sourceKey: 'n
 
 Empleado.hasMany(Licencia_empleado, { foreignKey: 'empleado_id', constraints: false });
 Licencia_empleado.belongsTo(Empleado, { foreignKey: 'empleado_id', constraints: false });
+
+Empleado.hasMany(Notificaciones, { foreignKey: 'empleado_id' });
+Notificaciones.belongsTo(Empleado, { foreignKey: 'empleado_id' });
 
 Sector.hasMany(Supervisor);
 Supervisor.belongsTo(Sector);

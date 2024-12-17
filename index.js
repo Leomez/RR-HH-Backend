@@ -18,7 +18,7 @@ const { crearEmpleadoDePrueba } = require('./src/util/datosParaCargar/adminDePru
 // const { crearRegistrosLicenciaYVacaciones } = require('./src/util/IniciarTiposDeLicencias')
 // const { iniciarDatos } = require('./src/util/IniciarDatosDePrueba')
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 3000;
 
 const startServer = async () => {
     const start = performance.now();
@@ -27,7 +27,7 @@ const startServer = async () => {
     const syncTimeInSeconds = (end - start) / 1000;
     await crearEmpleadoDePrueba();
 
-    server.listen(port, async () => {
+    server.listen(port, '0.0.0.0', async () => {
         // await crearRegistrosLicenciaYVacaciones()
         console.log(`Server corriendo en el puerto ${port}`)
         console.log(`Tiempo de sincronización de la base de datos: ${syncTimeInSeconds} segundos`);

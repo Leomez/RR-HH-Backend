@@ -1,12 +1,17 @@
 const { Router } = require('express')
 const router = Router()
-const {crearTipoSolicitud} = require('../Controllers/Solicitud/TipoSolicitud/CrearTipoSolicitudController')
-const {traerTipoSolicitud} = require('../Controllers/Solicitud/TipoSolicitud/TraerTipoSolicitudController')
-const {crearSolicitudController} = require('../Controllers/Solicitud/Solicitud/CrearSolicitudController')
-const {getSolicitudController, getSolicitudElevadaController, getSolicitudEmpleadoController, getAllSolicitudesController} = require('../Controllers/Solicitud/Solicitud/GetSolicitudController')
-const {getTipoLicencias} = require('../Controllers/VacacionesYLicencias/Tipos/getTipoLicenciasController')
-const {getTipoVacaciones} = require('../Controllers/VacacionesYLicencias/Tipos/getTipoVacacionesController')
-const {responderSolicitudController} = require('../Controllers/Solicitud/Solicitud/ResponderSolicitudController')
+const { crearTipoSolicitud } = require('../Controllers/Solicitud/TipoSolicitud/CrearTipoSolicitudController')
+const { traerTipoSolicitud } = require('../Controllers/Solicitud/TipoSolicitud/TraerTipoSolicitudController')
+const { crearSolicitudController } = require('../Controllers/Solicitud/Solicitud/CrearSolicitudController')
+const {
+    getSolicitudController,
+    getSolicitudElevadaController,
+    getSolicitudEmpleadoController,
+    getAllSolicitudesController
+} = require('../Controllers/Solicitud/Solicitud/GetSolicitudController')
+const { getTipoLicencias } = require('../Controllers/VacacionesYLicencias/Tipos/getTipoLicenciasController')
+const { getTipoVacaciones } = require('../Controllers/VacacionesYLicencias/Tipos/getTipoVacacionesController')
+const { responderSolicitudController } = require('../Controllers/Solicitud/Solicitud/ResponderSolicitudController')
 
 
 console.log('estoy en la ruta de licencias y permisos');

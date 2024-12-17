@@ -2,6 +2,8 @@ const {Empleado} = require("../../Config/db");
 const { Tipo_de_solicitud } = require("../../Config/db");
 const { Solicitud } = require("../../Config/db");
 const { TraerSupervisores} = require("../Supervisor/TraerSupervisores")
+const { crearNotificaciones } = require("./../Notificaciones/crearNotificaciones")
+
 
 const formatDate = (date) => {
     const [day, month, year] = date.split('-');
@@ -31,6 +33,15 @@ async function crearSolicitudes(solicitud) {
             tipo: solicitud.tipo_solicitud_id,
             diasSolicitados: solicitud.diasSolicitados,            
         });
+        console.log(solicitud);
+
+        await crearNotificaciones({
+            empleado_id: solicitud.empleado_id,
+            tipo: "solicitud",
+            mensaje: `Tu solicitud de ${solicitud.categoria} ha sido enviada exitosamente`,
+            fecha: new Date(),
+            estado: "pending"
+        })
 
         return {
             success: true,

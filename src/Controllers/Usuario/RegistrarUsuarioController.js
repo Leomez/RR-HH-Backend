@@ -4,7 +4,7 @@ async function RegistrarUsuario(req, res) {
     const userData = req.body
     try {
         const respuesta = await CrearUsuario(userData)
-        console.log('respuesta del controlador: '+ respuesta);
+        console.log('respuesta del controlador: '+ respuesta.data + '   ' + respuesta.error);
         if (respuesta.success) {
             res.status(respuesta.status).json({
                 success: true,
