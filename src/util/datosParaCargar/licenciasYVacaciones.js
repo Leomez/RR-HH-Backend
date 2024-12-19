@@ -48,12 +48,12 @@ const tipoLicencias = [
       "descripcion": "Licencia por fallecimiento de familiar de 2º y 3º grado"
     },
     {
-      "nombre": "Casamiento_hijo",
+      "nombre": "Casamiento hijo",
       "cantDias": 2,
       "descripcion": "Licencia por casamiento o nacimiento de hijo"
     },
     {
-      "nombre": "Siniestro_vivienda",
+      "nombre": "Siniestro vivienda",
       "cantDias": 5,
       "descripcion": "Licencia por siniestro en la vivienda"
     },
