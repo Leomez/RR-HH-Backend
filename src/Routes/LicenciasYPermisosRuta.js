@@ -12,7 +12,8 @@ const {
 const { getTipoLicencias } = require('../Controllers/VacacionesYLicencias/Tipos/getTipoLicenciasController')
 const { getTipoVacaciones } = require('../Controllers/VacacionesYLicencias/Tipos/getTipoVacacionesController')
 const { responderSolicitudController } = require('../Controllers/Solicitud/Solicitud/ResponderSolicitudController')
-
+const { getLicenciaDisponibleXEmpleadoController } = require('../Controllers/VacacionesYLicencias/Licencias/getLicenciaDisponibleXEmpleadoController')
+const { getVacacionesDisponiblesXEmpleadoController } = require('../Controllers/VacacionesYLicencias/Licencias/getVacacionesDisponiblesXEmpleadoController')
 
 console.log('estoy en la ruta de licencias y permisos');
 
@@ -34,6 +35,10 @@ router.get('/getSolicitudAlSuper', getSolicitudController)
 router.get('/getSolicitudElevada', getSolicitudElevadaController)
 //get para el empleado
 router.get('/getSolicitudEmpleado', getSolicitudEmpleadoController)
+//get licecia x empleado
+router.get('/licenciaXEmpleado/:id', getLicenciaDisponibleXEmpleadoController)
+// get dias de vacaciones disponibles
+router.get('/diasVacacionesXEmpleado/:id', getVacacionesDisponiblesXEmpleadoController)
 
 
 

@@ -109,5 +109,37 @@ async function actualizarDiasPendientes(id, diasSolicitados) {
         };
     }
 }
-module.exports = {VacacionesXEmpleado, actualizarDiasPendientes}
+
+const getDiasPendientes = async (id) => {
+    try {
+        const vacaciones = await Vacaciones_empleado.findOne({
+            where: {
+                empleado_id: id
+            }
+        });
+
+        if (!vacaciones) {
+            return {
+                status: 404,
+                success: false,
+                message: 'No se encontraron datos de vacaciones para el empleado'
+            };
+        }
+
+        return {
+            status: 200,
+            success: true,
+            data: vacaciones.dias_pendientes
+        };
+
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message,
+            error: error,
+            status: 500
+        };
+    }
+}
+module.exports = {VacacionesXEmpleado, actualizarDiasPendientes, getDiasPendientes}
 
