@@ -89,7 +89,13 @@ const sequelizePgUrl = new Sequelize(`${PG_URL}`, {
 function conexion(db) {
     switch (db) {
         case "USE_POSTGRES_BACKUP":
-            return sequelizePostgres
+            {
+                console.log(`host ${PG_DB_HOST}`);  
+                console.log(`port ${PG_DB_PORT}`);
+                console.log('name', PG_DB_NAME);
+                console.log('user', PG_DB_USER);
+                return sequelizePostgres
+            }
         case "USE_POSTEGRES_URL":
             return sequelizePgUrl
         default:
