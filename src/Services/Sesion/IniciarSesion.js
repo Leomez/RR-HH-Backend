@@ -5,19 +5,20 @@ const { registrarse } = require('./Registrarse');
 
 async function IniciarSesion(user) {    
     try {
-        console.log(user);
+        // console.log(user);
         const empleadoHabilitado = await Empleado.findOne({
             where: { correo: user.email }
           });
+        
+          let currentUser = await Usuario.findOne({
+              where: { id: user.uid  }
+          })
+        
         // let todosLosUsuarios = await Usuario.findAll()
         // console.log(todosLosUsuarios);
-        console.log(empleadoHabilitado);
+        // console.log(empleadoHabilitado);
         // const empleados = await Empleado.findAll()
         // console.log(empleados, '<--- empleados');
-        let currentUser = await Usuario.findOne({
-            where: { id: user.uid  }
-        })
-
         // console.log(currentUser);
         
         if (!currentUser) {

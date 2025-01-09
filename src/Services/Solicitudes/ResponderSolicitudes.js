@@ -28,7 +28,7 @@ async function ResponderSolicitudes(id, estado) {
         await crearNotificaciones({
             empleado_id: solicitud.empleado_id,
             tipo: "Estado de Solicitud",
-            mensaje: `Tu solicitud de ${nombre_tipo_solicitud} ha sido ${estado}`,
+            mensaje: `Tu solicitud de ${isNaN(nombre_tipo_solicitud) ? nombre_tipo_solicitud : 'vacaciones'} ha sido ${estado}`,
             fecha: new Date(),
             estado: "pending"
         })

@@ -38,7 +38,7 @@ async function crearSolicitudes(solicitud) {
         await crearNotificaciones({
             empleado_id: solicitud.empleado_id,
             tipo: "solicitud",
-            mensaje: `Tu solicitud de ${solicitud.categoria} ha sido enviada exitosamente`,
+            mensaje: `Tu solicitud de ${isNaN(solicitud.categoria) ? solicitud.categoria : "vacaciones"} ha sido enviada exitosamente`,
             fecha: new Date(),
             estado: "pending"
         })
