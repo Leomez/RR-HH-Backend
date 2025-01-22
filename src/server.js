@@ -19,16 +19,20 @@ const server = express();
   }
 })();
 
-const DOMAIN_FRONT = process.env.DOMAIN_FRONT;
-console.log(`URL del front -> ${DOMAIN_FRONT}`);
+// const DOMAIN_FRONT = process.env.DOMAIN_FRONT;
+// console.log(`URL del front -> ${DOMAIN_FRONT}`);
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
 
+const origins = process.env.ALLOWED_URLS.split(',');
 server.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', "*"); // update to match the domain you will make the request from
+  console.log(req.headers.origin)
+  if (origins.includes(req.headers.origin)) {
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+  }
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
