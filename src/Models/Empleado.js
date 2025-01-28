@@ -54,7 +54,7 @@ module.exports = async (sequelize) => {
       allowNull: false
     },
     cargo: {
-      type: DataTypes.ENUM('Gerente', 'Supervisor', 'Empleado'),
+      type: DataTypes.ENUM('Gerente', 'Administrador', 'Jefe', 'Supervisor', 'Empleado'),
       allowNull: false
     },
     categoria: {
