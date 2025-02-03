@@ -1,12 +1,7 @@
 const { Empleado, Usuario } = require('../../Config/db')
 
 async function eliminarEmpleado(id) {
-
-    // console.log('estoy en eliminar empleado');
-    // const empleado = await Empleado.findById(id)
-    // if (!empleado) {
-    //      console.log('no hay empleado')}
-    // console.log(empleado);
+   
     try {
 
         const empleado = await Empleado.findByPk(id)
@@ -22,8 +17,8 @@ async function eliminarEmpleado(id) {
                 status: 404
             }
         } else {
-            if (usuario) await usuario.destroy()
-            await empleado.destroy()
+            if (usuario) await usuario.destroy({ force: true })
+            await empleado.destroy({ force: true })
             return {
                 success: true,
                 message: 'Empleado eliminado',

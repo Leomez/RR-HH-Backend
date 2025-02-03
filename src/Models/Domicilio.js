@@ -18,6 +18,14 @@ module.exports = async (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    piso: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    depto: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     ciudad: {
       type: DataTypes.STRING,
       allowNull: false,
