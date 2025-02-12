@@ -45,6 +45,10 @@ module.exports = async (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    tel_alternativo: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     correo: {
       type: DataTypes.STRING,
       allowNull: false
@@ -55,6 +59,10 @@ module.exports = async (sequelize) => {
     },
     cargo: {
       type: DataTypes.ENUM('Gerente', 'Administrador', 'Jefe', 'Supervisor', 'Empleado'),
+      allowNull: false
+    },
+    turno: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     categoria: {
