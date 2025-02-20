@@ -9,7 +9,7 @@ const { EliminarEmpleado} = require('../Controllers/Empleado/EliminarEmpleadoCon
 
 router.post('/', NuevoEmpleado);
 router.get('/', TraerEmpleados);
-// router.get('/:id', TraerEmpleado);
+router.get('/:id', TraerEmpleado);
 router.put('/:id', ActualizarEmpleado);
 router.delete('/', EliminarEmpleado);
 

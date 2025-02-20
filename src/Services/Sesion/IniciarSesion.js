@@ -3,24 +3,16 @@ const { registrarse } = require('./Registrarse');
 // const { appError } = require('../../util/appError')
 
 
-async function IniciarSesion(user) {    
-    try {
-        // console.log(user);
+async function IniciarSesion(user) {   
+    try {       
         const empleadoHabilitado = await Empleado.findOne({
             where: { correo: user.email }
-          });
-        
-          let currentUser = await Usuario.findOne({
-              where: { id: user.uid  }
-          })
-        
-        // let todosLosUsuarios = await Usuario.findAll()
-        // console.log(todosLosUsuarios);
-        // console.log(empleadoHabilitado);
-        // const empleados = await Empleado.findAll()
-        // console.log(empleados, '<--- empleados');
-        // console.log(currentUser);
-        
+        });
+
+        let currentUser = await Usuario.findOne({
+            where: { id: user.uid }
+        })        
+
         if (!currentUser) {
             if (!empleadoHabilitado) {
                 return {
@@ -47,7 +39,14 @@ async function IniciarSesion(user) {
                     }
                 }
             }
-        } else {
+        } else { 
+            
+            if (user.password) {
+                await Usuario.update(
+                    {email: user.email, password: user.password }, 
+                    {where: { id: user.uid }
+                })
+            }
             return {
                 success: true,
                 message: `Hola ${currentUser.dataValues.usuario}`,

@@ -10,6 +10,7 @@ const sinFoto = path.join(__dirname, '..', 'assets', 'noFoto.png');
 
 async function CrearUsuario(datos) {
 
+  
   const { email, password } = datos;
   const auth = getAuth(app);
   // console.log(datos);
@@ -40,7 +41,9 @@ async function CrearUsuario(datos) {
         usuario: userRecord.displayName,
         foto: userRecord.photoURL || sinFoto,
         rol: usuarioAutorizado.dataValues.permisos,
-        EmpleadoId: usuarioAutorizado.dataValues.id
+        EmpleadoId: usuarioAutorizado.dataValues.id,  // <---me quede aca hay que controlar esto  
+        email: email,
+        password: password
       })
       console.log(nuevoUsuario);
       return {

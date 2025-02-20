@@ -4,12 +4,12 @@ const { getAuth } = require('firebase-admin/auth');
 const auth = getAuth(app);
 
 async function AuthToken(req, res, next) {
-    try {
+    try {       
         // Verificar si existe la cabecera 'authorization' y es diferente de undefined
         if (req.headers.authorization && req.headers.authorization.split(' ')[1]) {
             const token = req.headers.authorization.split(' ')[1];
             console.log('Validando token de autorización...');
-            console.log('Token recibido: ', token);
+            // console.log('Token recibido: ', token);
             
             const decodedToken = await auth.verifyIdToken(token);
             req.token = token;

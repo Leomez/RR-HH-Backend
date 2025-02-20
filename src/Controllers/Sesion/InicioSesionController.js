@@ -4,7 +4,8 @@ const { catchAsync } = require('../../Middleware/catchAsync')
 
 async function InicioSesionController(req, res) {
     const { user } = req
-    const resultado = await IniciarSesion(user)
+    const usuario = {email: req.body.email, password: req.body.password, ...user}
+    const resultado = await IniciarSesion(usuario)
     if (resultado.success) {
         resultado.data.token = req.token
         res.status(resultado.status).json({

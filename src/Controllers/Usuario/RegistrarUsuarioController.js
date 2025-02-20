@@ -2,6 +2,7 @@ const { CrearUsuario } = require('../../Services/Usuarios/RegistrarUsuario')
 
 async function RegistrarUsuario(req, res) {
     const userData = req.body
+    console.log("datos recibidos:", userData);
     try {
         const respuesta = await CrearUsuario(userData)
         console.log('respuesta del controlador: '+ respuesta.data + '   ' + respuesta.error);

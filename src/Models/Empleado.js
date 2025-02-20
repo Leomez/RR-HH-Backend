@@ -58,7 +58,7 @@ module.exports = async (sequelize) => {
       allowNull: false
     },
     cargo: {
-      type: DataTypes.ENUM('Gerente', 'Administrador', 'Jefe', 'Supervisor', 'Empleado'),
+      type: DataTypes.ENUM('Gerente', 'Administrador', 'Jefe', 'Supervisor', 'Empleado', 'Encargado'),
       allowNull: false
     },
     turno: {
@@ -66,7 +66,7 @@ module.exports = async (sequelize) => {
       allowNull: false
     },
     categoria: {
-      type: DataTypes.ENUM('1°', '2°', '3°','Fuera de Convenio'),
+      type: DataTypes.ENUM('1°', '2°', '3°','4°', '5°', 'Fuera de Convenio'),
       allowNull: false
     },
     permisos: {

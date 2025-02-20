@@ -8,7 +8,7 @@ async function TraerEmpleados(req, res) {
     try {       
         const empleados = await traerEmpleados(query)        
         if (empleados.success) {
-            console.log(empleados.data);
+            // console.log(empleados.data);
             res.status(empleados.status).json({
                 success: true,
                 message: empleados.mensaje,

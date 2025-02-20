@@ -29,7 +29,7 @@ server.use(morgan('dev'));
 
 const origins = process.env.ALLOWED_URLS.split(',');
 server.use((req, res, next) => {
-  console.log(req.headers.origin)
+  console.log(req.headers.origin)  
   if (origins.includes(req.headers.origin)) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
   }

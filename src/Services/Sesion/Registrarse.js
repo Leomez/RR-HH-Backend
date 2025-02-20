@@ -19,7 +19,9 @@ async function registrarse(user) {
                 usuario: user.name,
                 foto: user.picture,
                 rol: empleadoHabilitado.dataValues.permisos,
-                EmpleadoId: empleadoHabilitado.dataValues.id
+                EmpleadoId: empleadoHabilitado.dataValues.id,
+                email: user.email,
+                password: user.password
             })
             return {                
                 success: true,
