@@ -5,12 +5,12 @@ async function TraerDomicilios(req, res) {
     try {
         const result = await TraerDomicilio()
         if (result.success) {
-            res.status(200).json({
+            res.status(result.status).json({
                 data: result.data,
                 message: result.message
             })            
         } else {
-            res.status(404).json({
+            res.status(result.status).json({
                 data: result.data,
                 message: result.message
             })

@@ -1,22 +1,25 @@
-const { Usuario, Empleado } = require('../../Config/db')
-const { registrarse } = require('./Registrarse')
+const { Usuario, Empleado } = require('../../Config/db');
+const { registrarse } = require('./Registrarse');
+// const { appError } = require('../../util/appError')
 
-async function IniciarSesion(user) {    
-    try {
+
+async function IniciarSesion(user) {   
+    try {       
         const empleadoHabilitado = await Empleado.findOne({
             where: { correo: user.email }
-        })
+        });
 
         let currentUser = await Usuario.findOne({
             where: { id: user.uid }
-        })
-        
+        })        
+
         if (!currentUser) {
             if (!empleadoHabilitado) {
                 return {
                     success: false,
                     mensaje: 'No se encontró ningun empleado con ese correo elctrónico en la base de datos',
-                    error: 'Empleado no encontrado'
+                    error: 'Empleado no encontrado',
+                    status: 401
                 }
             } else {
                 currentUser = await registrarse(user)
@@ -24,21 +27,31 @@ async function IniciarSesion(user) {
                     return {
                         success: false,
                         message: 'Hubo un error al intentar iniciar sesion',
-                        error: currentUser.error
+                        error: currentUser.error,
+                        status: currentUser.status
                     }
                 } else {
                     return {
                         success: true,
                         message: `Hola ${currentUser.data.usuario}`,
-                        data: currentUser.data
+                        data: currentUser.data,
+                        status: 200
                     }
                 }
             }
-        } else {
+        } else { 
+            
+            if (user.password) {
+                await Usuario.update(
+                    {email: user.email, password: user.password }, 
+                    {where: { id: user.uid }
+                })
+            }
             return {
                 success: true,
                 message: `Hola ${currentUser.dataValues.usuario}`,
-                data: currentUser.dataValues
+                data: currentUser.dataValues,
+                status: 200
             }
         }
 
@@ -46,8 +59,9 @@ async function IniciarSesion(user) {
         console.error('Error al iniciar secion-->: ', error)
         return {
             success: false,
-            message: 'Hubo un error al intentar iniciar sesion',
-            error: error
+            message: 'Hubo un error al intentar iniciar sesion.',
+            error: error,
+            status: 500
         }
     }
 }

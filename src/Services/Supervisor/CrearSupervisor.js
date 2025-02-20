@@ -16,7 +16,7 @@ async function CrearSupervisor(empleadoId, sectorId) {
         } else {
             const superv = await Supervisor.create({
                 codigo,
-                EmpleadoId: empleadoId,
+                empleadoId: empleadoId,
                 SectorId: sectorId
             })
             return{

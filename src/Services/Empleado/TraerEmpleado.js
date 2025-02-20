@@ -37,20 +37,23 @@ async function traerEmpleados(query) {
       return {
         success: true,
         mensaje: 'empleados encontrados',
-        data: empleados
+        data: empleados,
+        status: 200
       }
     } else {
       return {
         success: false,
         mensaje: "Empleado no encontrado",
-        data: empleados
+        data: empleados,
+        status: 404
       };
     }
   } catch (error) {
     return {
       success: false,
       mensaje: 'Error al buscar el empleado',
-      error: error.message
+      error: error.message,
+      status: 500
     };
   }
 }

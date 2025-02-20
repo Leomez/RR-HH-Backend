@@ -10,13 +10,13 @@ async function NuevoSector(req, res) {
         const resultado = await crearSector(datos);
         // console.log(sector);
         if (resultado.success) {
-            res.status(200).json({
+            res.status(resultado.status).json({
                 success: true,
                 message: resultado.mensaje,
                 data: resultado.sector
             });    
         } else {
-            res.status(500).json({
+            res.status(resultado.status).json({
                 success: false,
                 message: resultado.mensaje,
                 error: resultado.error,
@@ -56,12 +56,12 @@ async function TraerSectorXId(req, res) {
     const { id } = req.params;
     const resp = await traerSectorXId(id);    
     try {
-        res.status(200).json({
+        res.status(resp.status).json({
             success: true,
             data: resp.sector
         })
     } catch (error) {
-        resp.status(500).json({
+        resp.status(resp.status).json({
             success: false,
             message: 'Error en servidor',
             error: error.message,
@@ -73,9 +73,10 @@ async function TraerSector(req, res) {
     const { nombre_sector } = req.query;      
     const sector = await traerSector(nombre_sector)    
     try {
-        res.status(200).json({
-            success: true,
-            data: sector.data
+        res.status(sector.status).json({
+            success: sector.success,
+            data: sector.data? sector.data : null,
+            message: sector.message
         })
     } catch (error) {
         res.status(500).json({

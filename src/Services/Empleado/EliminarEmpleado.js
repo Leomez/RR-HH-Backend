@@ -1,27 +1,36 @@
-const { Empleado } = require('../../Config/db')
+const { Empleado, Usuario } = require('../../Config/db')
 
 async function eliminarEmpleado(id) {
-
-    console.log('estoy en eliminar empleado');
-    // const empleado = await Empleado.findById(id)
-    // if (!empleado) {
-    //      console.log('no hay empleado')}
-    // console.log(empleado);
+   
     try {
-        await Empleado.destroy({
+
+        const empleado = await Empleado.findByPk(id)
+        const usuario = await Usuario.findOne({
             where: {
-                id: id
+                EmpleadoId: id
             }
         })
-        return {
-            success: true,
-            message: 'Empleado eliminado'            
+        if (!empleado) {
+            return {
+                success: false,
+                message: 'Empleado no encontrado',
+                status: 404
+            }
+        } else {
+            if (usuario) await usuario.destroy({ force: true })
+            await empleado.destroy({ force: true })
+            return {
+                success: true,
+                message: 'Empleado eliminado',
+                status: 200
+            }
         }
-        
+
     } catch (error) {
         return {
             success: false,
-            message: error.message
+            message: error.message,
+            status: 500
         }
     }
 }

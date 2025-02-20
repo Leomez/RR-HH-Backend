@@ -17,6 +17,7 @@ module.exports = async (sequelize) => {
     dni: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isNumeric: {
           msg: 'El DNI debe contener solo números'
@@ -44,6 +45,10 @@ module.exports = async (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    tel_alternativo: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     correo: {
       type: DataTypes.STRING,
       allowNull: false
@@ -53,11 +58,15 @@ module.exports = async (sequelize) => {
       allowNull: false
     },
     cargo: {
-      type: DataTypes.ENUM('Gerente', 'Supervisor', 'Empleado'),
+      type: DataTypes.ENUM('Gerente', 'Administrador', 'Jefe', 'Supervisor', 'Empleado', 'Encargado'),
+      allowNull: false
+    },
+    turno: {
+      type: DataTypes.STRING,
       allowNull: false
     },
     categoria: {
-      type: DataTypes.ENUM('1°', '2°', '3°','Fuera de Convenio'),
+      type: DataTypes.ENUM('1°', '2°', '3°','4°', '5°', 'Fuera de Convenio'),
       allowNull: false
     },
     permisos: {

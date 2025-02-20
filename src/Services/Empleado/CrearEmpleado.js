@@ -2,8 +2,11 @@
 const { sequelize } = require("../../Config/db");
 const { Empleado, Domicilio, Sector } = require("../../Config/db");
 const { traerSector } = require("../Sector/TraerSector");
+const { VacacionesXEmpleado } = require("../VacacionesXEmpleado/VacacionesXEmpleado");
+const { LicenciaXEmpleado } = require("../Tipos_de_licencia/LicenciasXEmpleado")
 
 
+// Crear empleado
 async function crearEmpleado(datos) {
     const t = await sequelize.transaction();
     
@@ -19,20 +22,22 @@ async function crearEmpleado(datos) {
                 where: {
                     calle: domicilio.calle,
                     numero: domicilio.numero,
+                    piso: domicilio.piso || null,
+                    depto: domicilio.depto || null,
                     ciudad: domicilio.ciudad,
                     cod_postal: domicilio.cod_postal
                 },
                 transaction: t
             }
         );
-
+        // console.log(`funcion crearEmpleado: domicilio ${domiExistente.dataValues.calle} ${domiExistente.dataValues.numero} ${domiExistente.dataValues.ciudad}`);    
         // Traigo el sector en development. 
         // En produccion deberia traer el sector por id y eleiminar este bloque.        
         
         let sect;
         sect = await traerSector(sector);
 
-        // console.log('sector en la db -->'+ sect.data.dataValues.id);
+        // console.log('funcion crearEmpleado: sector '+ sect.data.dataValues.nombre_sector);
 
         if (!sect.data) {
             if (sect.success === false) {
@@ -64,8 +69,9 @@ async function crearEmpleado(datos) {
         } catch (error) {
             console.error('Error al crear el empleado: ',error)    
         }
-        
-        // console.log(empleado);
+        await VacacionesXEmpleado(empleado.dataValues.id)
+        await LicenciaXEmpleado(empleado.dataValues.id)
+        // console.log(`funcion crearEmpleado: empleado ${empleado.dataValues.nombre_empleado} ${empleado.dataValues.apellido_empleado} creado exitosamente`);
 
         return {
             success: true,

@@ -1,16 +1,16 @@
 const {Tipo_de_solicitud} = require("../../../Config/db")
 
-async function CrearTipoSolicitud({nombre, canti_dias, caracteristicas}) {
+async function CrearTipoSolicitud({nombre, caracteristicas}) {
     try {
         const tipo_solicitud = await Tipo_de_solicitud.create({
-            nombre,
-            canti_dias: canti_dias || null, // Valor predeterminado para cantidad_de_dias
+            nombre,            
             caracteristicas: caracteristicas || null, // Valor predeterminado para caracteristicas
         })
         return {
             success: true,
             mensaje: 'Tipo de solicitud creado con exito',
-            tipo_solicitud
+            tipo_solicitud,
+            status: 200
         }
     } catch (error) {
         return {
@@ -19,7 +19,8 @@ async function CrearTipoSolicitud({nombre, canti_dias, caracteristicas}) {
             error: {
                 codigo: error.codigo,
                 mensaje: error.message
-            }
+            },
+            status: 500
         }
     }
 }

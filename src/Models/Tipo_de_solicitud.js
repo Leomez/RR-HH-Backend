@@ -12,11 +12,7 @@ module.exports = async (sequelize) => {
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        canti_dias: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
+        },        
         caracteristicas: {
             type: DataTypes.STRING,
             allowNull: true

@@ -9,6 +9,7 @@ const recibos_sin_firmar = async (id) => {
         estado: "Sin firmar",
       },
     });
+    // console.log(recibos, "recibos");
     
     const notificacion = recibos.map((recibo) => {
       return {

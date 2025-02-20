@@ -7,14 +7,14 @@ async function ActualizarEmpleado(req, res) {
     try {
         const response = await actualizarEmpleado(id, datos);
         if (response.error) {
-            res.status(400).json({
+            res.status(response.status).json({
                 success: false,
                 message: response.message,
                 data: response.data,
                 error: response.error
             })
         } else {
-            res.status(200).json({
+            res.status(response.status).json({
                 success: true,
                 message: response.message,
                 data: response.data,

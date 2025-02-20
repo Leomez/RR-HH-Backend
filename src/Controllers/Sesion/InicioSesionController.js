@@ -1,32 +1,31 @@
 const { IniciarSesion } = require('../../Services/Sesion/IniciarSesion')
+const { catchAsync } = require('../../Middleware/catchAsync')
+
 
 async function InicioSesionController(req, res) {
-    const { user } = req   
-       
-    try {
-        const resultado = await IniciarSesion(user)
-        if (resultado.success) {
-            resultado.data.token = req.token
-            res.status(200).json({
-                success: true,
-                message: resultado.message,
-                data: resultado.data
-            });
-        } else {
-            console.log(resultado.mensaje);
-            res.status(500).json({
-                success: false,
-                message: resultado.message,
-                error: resultado.error
-            });
-        }        
-    } catch (error) {
-        res.status(500).json({
+    const { user } = req
+    const usuario = {email: req.body.email, password: req.body.password, ...user}
+    const resultado = await IniciarSesion(usuario)
+    if (resultado.success) {
+        resultado.data.token = req.token
+        res.status(resultado.status).json({
+            success: true,
+            message: resultado.message,
+            data: resultado.data
+        });
+    } else {
+        console.log(resultado.mensaje);
+        res.status(resultado.status).json({
             success: false,
-            message: 'Error en el servidor',
-            error: error.message
+            message: resultado.message,
+            error: resultado.error
         });
     }
+
 }
 
-module.exports = { InicioSesionController }
+module.exports = {
+    InicioSesionController: catchAsync(InicioSesionController)
+}
+
+// module.exports = { InicioSesionController }

@@ -2,17 +2,18 @@ const { CrearUsuario } = require('../../Services/Usuarios/RegistrarUsuario')
 
 async function RegistrarUsuario(req, res) {
     const userData = req.body
+    console.log("datos recibidos:", userData);
     try {
         const respuesta = await CrearUsuario(userData)
-        console.log('respuesta del controlador: '+ respuesta);
+        console.log('respuesta del controlador: '+ respuesta.data + '   ' + respuesta.error);
         if (respuesta.success) {
-            res.status(200).json({
+            res.status(respuesta.status).json({
                 success: true,
                 message: respuesta.message,
                 data: respuesta.data
             });
         } else {
-            res.status(500).json({
+            res.status(respuesta.status).json({
                 success: false,
                 message: respuesta.message,
                 error: respuesta.error

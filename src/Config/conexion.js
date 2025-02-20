@@ -65,19 +65,49 @@ const sequelizeMySQL = new Sequelize(`${DB_NAME}`, `${DB_USER}`, `${DB_PASSWORD}
     },
 });
 
-const sequelizePgUrl = new Sequelize(`${PG_URL}`,{
-    logging: (...msg) => console.log(msg),
+const sequelizePgUrl = new Sequelize(`${PG_URL}`, {
+    // logging: (...msg) => console.log(msg),
+    logging: false,    
+    dialectOptions: {
+        ssl: {
+            require: false, // Asegurarse de que SSL/TLS esté requerido
+            rejectUnauthorized: false // Puedes ajustar esto según tus necesidades de seguridad
+        }
+    },
+    define: {
+        freezeTableName: true
+    },
+    pool: {
+        max: 10, // Número máximo de conexiones en el pool
+        min: 0, // Número mínimo de conexiones en el pool
+        acquire: 60000, // Tiempo máximo de espera para adquirir una conexión (en milisegundos)
+        idle: 20000 // Tiempo máximo que una conexión puede estar inactiva antes de ser liberada (en milisegundos)
+      }    
+
 })
 
 function conexion(db) {
     switch (db) {
         case "USE_POSTGRES_BACKUP":
-            return sequelizePostgres 
+            {
+                console.log(`host ${PG_DB_HOST}`);  
+                console.log(`port ${PG_DB_PORT}`);
+                console.log('name', PG_DB_NAME);
+                console.log('user', PG_DB_USER);
+                return sequelizePostgres
+            }
         case "USE_POSTEGRES_URL":
             return sequelizePgUrl
         default:
-            return sequelizeMySQL
+            {
+                console.log(`host ${DB_HOST}`);
+                console.log(`port ${DB_PORT}`);
+                console.log(`password ${DB_PASSWORD}`);
+                console.log(`user ${DB_USER}`);
+                console.log(`name ${DB_NAME}`);
+                return sequelizeMySQL
+            }
     }
-} 
+}
 
-module.exports = {conexion}
+module.exports = { conexion }

@@ -2,8 +2,12 @@ const { TraerTipoSolicitud } = require('../../../Services/Solicitudes/TipoSolici
 
 // Traer tipo solicitud
 const traerTipoSolicitud = async (req, res) => {
+    const { id }  = req.query;
+    // console.log(req.body, req.query)
+    console.log(id);
     try {
-        const respuesta = await TraerTipoSolicitud();
+        console.log('controlador tarerTipoSolicitud')
+        const respuesta = await TraerTipoSolicitud(id);
         if (!respuesta.success) {
             res.status(400).json({
                 success: false,

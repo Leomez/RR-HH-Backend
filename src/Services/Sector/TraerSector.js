@@ -5,7 +5,7 @@ const { Sector } = require("../../Config/db");
 async function traerSector(sector) {
     // const t = await sequelize.transaction();
     try {
-        if (sector) {            
+        if (sector) {
             const sect = await Sector.findOne(
                 {
                     where: {
@@ -13,22 +13,43 @@ async function traerSector(sector) {
                     }
                 }
             );
-            return {
-                success: true,           
-                data: sect
-            };    
-        } else {
-            const sectores = await Sector.findAll();            
-            return {
-                success: true,           
-                data: sectores
+            if (sect === null) {
+                return {
+                    success: false,
+                    message: "No existe el sector con ese nombre",
+                    status: 404
+                }
+            } else {
+                return {
+                    success: true,
+                    data: sect,
+                    message: "Sector encontrado",
+                    status: 200
+                }
             };
+        } else {
+            const sectores = await Sector.findAll();
+            if (sectores === null) {
+                return {
+                    success: false,
+                    message: "No existen sectores",
+                    status: 404
+                }
+            } else {
+                return {
+                    success: true,
+                    data: sectores,
+                    message: "Sectores encontrados",
+                    status: 200
+                };
+            }
         }
-        
+
     } catch (error) {
         return {
             success: false,
-            message: error
+            message: `Error al buscar el sector: ${error.message}`,
+            status: 500
         }
     }
 }

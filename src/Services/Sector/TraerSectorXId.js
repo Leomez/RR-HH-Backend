@@ -7,17 +7,21 @@ async function traerSectorXId(id) {
             return{
                 success: true,
                 sector: sector,
+                message: "Sector encontrado",
+                status: 200
             }
         } else {
             return {
                 success: false,
-                message: "No existe el sector con ese id"
+                message: "No existe el sector con ese id",
+                status: 404
             }
         }        
     } catch (error) {
         return {
             success: false,
-            message: error.message
+            message: error.message,
+            status: 500
         }
     }
 }
