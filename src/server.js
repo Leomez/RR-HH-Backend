@@ -39,7 +39,7 @@ server.use((req, res, next) => {
   next();
 });
 
-
+server.use('/upload', express.static('upload')); // Para acceder a los archivos subidos
 
 // AQUI VAN LOS MIDDLEWIRES
 server.use('/', routes);

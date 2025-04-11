@@ -1,27 +1,30 @@
 const { error } = require('pdf-lib')
 const { traerEmpleados } = require('../../Services/Empleado/TraerEmpleado')
-const { TraerEmpleadoXId} = require('../../Services/Empleado/TraerEmpleadoXId')
+const { TraerEmpleadoXId } = require('../../Services/Empleado/TraerEmpleadoXId')
 
 async function TraerEmpleados(req, res) {
     const query = await req.query
-    const { id } = await req.params   
-    try {       
-        const empleados = await traerEmpleados(query)        
+    const { id } = await req.params
+    try {
+        const empleados = await traerEmpleados(query)
         if (empleados.success) {
-            // console.log(empleados.data);
+            
+            // console.log(empleados.data, '---empleados---');
             res.status(empleados.status).json({
                 success: true,
                 message: empleados.mensaje,
                 data: await empleados.data
-            })    
+            })
         } else {
+            // console.log(empleados, '---empleados---');
             res.status(empleados.status).json({
                 success: false,
                 message: empleados.mensaje,
                 error: empleados.error
             })
-        }        
+        }
     } catch (error) {
+        console.error('Error al traer empleados:', error);
         res.status(500).json({
             success: false,
             message: 'Ningun empeado encontrado. Error en el servidor',
@@ -30,9 +33,9 @@ async function TraerEmpleados(req, res) {
     }
 }
 
-async function TraerEmpleado (req, res){
-    const { id } = req.params   
-    try {       
+async function TraerEmpleado(req, res) {
+    const { id } = req.params
+    try {
         const empleado = await TraerEmpleadoXId(id)
         if (empleado.success) {
             res.status(empleado.status).json({
@@ -41,6 +44,7 @@ async function TraerEmpleado (req, res){
                 data: await empleado.data
             })
         } else {
+            console.log(empleado, '---empleado---');
             res.status(empleado.status).json({
                 success: false,
                 message: empleado.mensaje,
@@ -48,6 +52,7 @@ async function TraerEmpleado (req, res){
             })
         }
     } catch (error) {
+        console.error('Error al traer empleado:', error);
         res.status(500).json({
             success: false,
             message: 'Ningun empeado encontrado',
@@ -57,7 +62,7 @@ async function TraerEmpleado (req, res){
 }
 
 
-module.exports = {    
-    TraerEmpleados,    
+module.exports = {
+    TraerEmpleados,
     TraerEmpleado
 }

@@ -1,5 +1,7 @@
 const { Op } = require("sequelize");
-const { Empleado } = require("../../Config/db");
+const { Empleado, Usuario, Domicilio, Sector } = require("../../Config/db");
+const express = require("express");
+const path = require("path");
 
 async function traerEmpleados(query) {
   const { nombre, apellido, dni, legajo, fecha_nac, id } = query;  
@@ -30,10 +32,44 @@ async function traerEmpleados(query) {
     }
         
     const empleados = await Empleado.findAll({
-      where: whereClause
-    });    
-    // console.log(empleados);
+      where: whereClause,
+      include: [
+        {model: Domicilio},
+        {model: Sector,
+          attributes: ['nombre_sector']
+        }
+      ],      
+    }); 
+ 
+    // for (let i = 0; i < empleados.length; i++) {      
+    //   console.log(empleados[i].dataValues.id);
+    //   console.log(empleados[i].dataValues.nombre_empleado);
+    //   console.log(empleados[i].dataValues.apellido_empleado);
+    //   console.log(`empleado ${i + 1}`);      
+    // }   
+
     if (empleados.length > 0) {
+      // const data = [];
+      // //mapealo para traer la foto del usuario
+      // // console.log(empleados, '<<--- empleados');
+      // try {
+      //   for (let i = 0; i < empleados.length; i++){
+      //     const usuario = await Usuario.findOne({
+      //       where: {
+      //         EmpleadoId: empleados[i].id
+      //       }
+      //     })
+      //     if (usuario !== null) {
+      //       // console.log(usuario.dataValues.foto, '<<--- foto'); 
+      //       const foto = usuario.dataValues.foto;          
+      //       data.push({...empleados[i].dataValues, foto: foto})                      
+      //     }
+      //   }    
+      //   // console.log(data);
+        
+      // } catch (error) {
+      //   console.log(error);
+      // }    
       return {
         success: true,
         mensaje: 'empleados encontrados',

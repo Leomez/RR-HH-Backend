@@ -17,8 +17,8 @@ async function eliminarEmpleado(id) {
                 status: 404
             }
         } else {
-            if (usuario) await usuario.destroy({ force: true })
-            await empleado.destroy({ force: true })
+            if (usuario) await usuario.destroy({ force: false })
+            await empleado.destroy({ force: false })
             return {
                 success: true,
                 message: 'Empleado eliminado',

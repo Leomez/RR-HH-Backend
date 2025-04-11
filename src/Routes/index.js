@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const express = require('express');
+const path = require('path');
 
 const Empleado = require('./EmpleadoRuta')
 const Domicilio = require('./DomicilioRuta')
@@ -10,7 +12,7 @@ const Notificaciones = require('./NotificacionesRuta')
 const Supervisor = require('./SupervisorRuta')
 const Licencias = require('./LicenciasYPermisosRuta')
 const Asistencia = require('./AsistenciaRuta')
-
+// const fotos = require('../Controllers/imagenesController/fotoPerfiController')
 const { CrearAdmin } = require('./CrearAdmin')
 const { AuthToken } = require('../Middleware/authToken')
 const router = Router();
@@ -19,9 +21,11 @@ router.get('/', (req, res) => {
     console.log("Acceso correcto");
     res.status(200).send('App de RR HH');
 });
+// router.use('/uploads', express.static(path.join(__dirname, 'uploads/fotos')));
 router.use('/crearAdmin', CrearAdmin);
 router.use('/login', Sesion);
 router.use('/usuario', Usuario)
+// router.use('/fotos/:id', fotos.mostrarFotoController )
 
 router.use(AuthToken)
 

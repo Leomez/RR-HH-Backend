@@ -12,9 +12,7 @@ async function crearEmpleado(datos) {
     
     try {
         
-        const { domicilio, sector, ...datosEmpleado } = datos;
-
-        
+        const { domicilio, sector, ...datosEmpleado } = datos;        
 
         // Busco domicilio o lo creo si no existe
         const [domiExistente] = await Domicilio.findOrCreate(
@@ -25,7 +23,11 @@ async function crearEmpleado(datos) {
                     piso: domicilio.piso || null,
                     depto: domicilio.depto || null,
                     ciudad: domicilio.ciudad,
-                    cod_postal: domicilio.cod_postal
+                    cod_postal: domicilio.cod_postal, 
+                    // Domilciio: domicilio.Domilciio,   //no va                 
+                    // Fecha_de_creacion: domicilio.Fecha_de_creacion,
+                    // Fecha_modoficacion: domicilio.Fecha_modoficacion,
+                    // Fecha_de_eliminacion: domicilio.Fecha_de_eliminacion
                 },
                 transaction: t
             }

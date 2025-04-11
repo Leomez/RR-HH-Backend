@@ -32,14 +32,15 @@ async function CrearUsuario(datos) {
       const userRecord = await auth.createUser({
         email: email,
         password: password,
-        displayName: usuarioAutorizado.dataValues.nombre_empleado
+        displayName: usuarioAutorizado.dataValues.nombre_empleado,       
+        
       });
       
       // Crear usuario en la base de datos
       const nuevoUsuario = await Usuario.create({
         id: userRecord.uid,
         usuario: userRecord.displayName,
-        foto: userRecord.photoURL || sinFoto,
+        foto: userRecord.photoURL || usuarioAutorizado.dataValues.foto || sinFoto,
         rol: usuarioAutorizado.dataValues.permisos,
         EmpleadoId: usuarioAutorizado.dataValues.id,  // <---me quede aca hay que controlar esto  
         email: email,

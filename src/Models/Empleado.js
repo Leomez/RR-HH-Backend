@@ -1,5 +1,9 @@
 
+const path = require('path');
 const { DataTypes } = require('sequelize');
+const noFoto = path.join(__dirname, '..', 'assets', 'noFoto.png');
+
+
 
 module.exports = async (sequelize) => {
   await sequelize.define('Empleado', {
@@ -36,6 +40,10 @@ module.exports = async (sequelize) => {
     apellido_empleado: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    foto: {
+      type: DataTypes.STRING,
+      defaultValue: noFoto
     },
     fecha_nac: {
       type: DataTypes.DATEONLY,
@@ -75,13 +83,14 @@ module.exports = async (sequelize) => {
     estado: {
       type: DataTypes.ENUM('Activo', 'Inactivo'),
       allowNull: true
-    }
+    }    
   }, {
     underscored: true,
     timestamps: true,
     createdAt: 'creado',
     updatedAt: 'actualizado',
     paranoid: true,
+    deletedAt: 'borrado',
   }); 
 }
 

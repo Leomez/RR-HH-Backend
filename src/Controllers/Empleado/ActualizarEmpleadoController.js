@@ -4,6 +4,12 @@ async function ActualizarEmpleado(req, res) {
     const { id } = req.params;
     const datos = req.body;
 
+    if (req.file) {
+        datos.foto = `${req.protocol}://${req.get('host')}/${req.file.path}`;
+        // datos.foto = req.file.path;
+    }
+    // console.log('🚀 Actualizando empleado ID:', id);
+    // console.log('🚀 Datos:', datos);
     try {
         const response = await actualizarEmpleado(id, datos);
         if (response.error) {
